@@ -98,25 +98,28 @@ const GamePage = () => {
           display="flex"
           alignItems="center"
           justifyContent="center"
+          p={2}
           pt={8}
           flexDirection="column"
         >
           <img src={gameData.image} alt="Game Picture" width="300" />
-          <Typography variant="h4">{gameData.name}</Typography>
-          <Typography>{gameData.description}</Typography>
+          <Typography variant="h4" style={{marginBottom: 16}}>{gameData.name}</Typography>
+          <Typography style={{marginBottom: 16}}>{gameData.description}</Typography>
           <Divider variant="middle" pt={3} />
           <Typography>Start: {dayjs(gameData.startDate).toString()}</Typography>
-          <Typography>End: {dayjs(gameData.endDate).toString()}</Typography>
+          <Typography >End: {dayjs(gameData.endDate).toString()}</Typography>
           <Divider />
           <Box
             minHeight={300}
             border="1px solid gray"
             borderRadius={2}
             width={400}
+            mt={2}
+            mb={2}
           >
             <Grid container>
               {stickerData.map((sticker, index) => (
-                <Grid item sm={4} key={index}>
+                <Grid item xs={4} key={index}>
                   {sticker.owners.includes(auth.id) || auth.admin ? (
                     <StickerOption
                       display="flex"
@@ -130,7 +133,7 @@ const GamePage = () => {
                         src={sticker.image}
                         style={{ width: 64, height: 64 }}
                       />
-                      <Typography>{sticker.name}</Typography>
+                      <Typography align="center">{sticker.name}</Typography>
                     </StickerOption>
                   ) : (
                     <Box
@@ -139,6 +142,7 @@ const GamePage = () => {
                       alignItems="center"
                       justifyContent="center"
                       flexDirection="column"
+                      width="100%"
                     >
                       <Avatar
                         src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Question-mark-grey.jpg/600px-Question-mark-grey.jpg"
