@@ -64,19 +64,6 @@ const CreateNewGamePage = () => {
     setAddStickerModalOpen(false);
   };
 
-  const handleAddSticker = (sticker) => {
-    console.log(sticker);
-  };
-
-  const addSticker = () => {
-    const temp = [...stickers];
-    temp.push({
-      name: "Test 1",
-      src: "https://sticknwrap.com/cdn/shop/products/naruto-20.jpg?v=1540455652&width=1946",
-    });
-    setStickers(temp);
-  };
-
   const removeSticker = (index) => {
     const temp = [...stickers];
     temp.splice(index, 1);
@@ -139,7 +126,6 @@ const CreateNewGamePage = () => {
         try {
           for (const sticker of stickers) {
             // @ts-ignore
-            console.log(sticker);
             const response = await fetch(`/api/sticker/update/${sticker.id}`, {
               method: "POST",
               headers: {

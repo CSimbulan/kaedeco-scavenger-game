@@ -6,8 +6,6 @@ import React from "react";
 const ProfileModal = ({ show, onHide }) => {
   const { auth } = AuthState();
 
-  console.log(auth)
-
   return (
     <Modal
       show={show}

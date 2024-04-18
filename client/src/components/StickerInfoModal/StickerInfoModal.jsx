@@ -20,11 +20,14 @@ import {
 } from "@mui/material";
 import { AuthState } from "../../context/AuthProvider";
 import React, { useEffect, useState } from "react";
-import { ExpandMore, Instagram } from "@mui/icons-material";
+import { ContentCopy, ExpandMore, Instagram } from "@mui/icons-material";
 import { Notify } from "../../utils";
 import { SocialIcon } from "react-social-icons";
 
 const StickerModal = ({ open, onClose, sticker }) => {
+
+  const {auth} = AuthState();
+
   return (
     <Dialog open={open} onClose={onClose}>
       <DialogTitle>{sticker.name}</DialogTitle>
@@ -33,6 +36,9 @@ const StickerModal = ({ open, onClose, sticker }) => {
           <img src={sticker.image} width={200} />
           <Typography></Typography>
           <Typography>{sticker.description}</Typography>
+          {auth.admin && <>
+          <Typography variant="body2">Sticker ID: {sticker._id} <IconButton><ContentCopy onClick={() => {navigator.clipboard.writeText(sticker._id)}}/></IconButton>
+            </Typography></>}
           <Divider style={{ backgroundColor: "black", margin: 16 }} flexItem />
           <Typography variant="body2">Artist: {sticker.artist.name}</Typography>
           <Box
