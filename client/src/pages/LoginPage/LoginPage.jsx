@@ -5,6 +5,7 @@ import { FaUserAlt } from "react-icons/fa";
 
 import { AuthState } from "../../context/AuthProvider";
 import { Notify } from "../../utils";
+import React from "react";
 
 const LoginPage = () => {
   const [credentials, setCredentials] = useState({
@@ -67,6 +68,7 @@ const LoginPage = () => {
         <Form.Control
           type="email"
           name="email"
+          // @ts-ignore
           tabIndex="1"
           placeholder="Enter email"
           value={credentials.email}
@@ -79,6 +81,7 @@ const LoginPage = () => {
         <Form.Control
           type="password"
           name="password"
+          // @ts-ignore
           tabIndex="2"
           placeholder="Password"
           value={credentials.password}
@@ -89,6 +92,7 @@ const LoginPage = () => {
       <Form.Group className="mb-3 mt-1 text-center" controlId="register">
         <Link
           to="/forgotPassword"
+          // @ts-ignore
           tabIndex="4"
           className="d-flex flex-row-reverse text-decoration-none mb-3"
         >
@@ -99,6 +103,7 @@ const LoginPage = () => {
       <Button
         variant="success"
         type="submit"
+        // @ts-ignore
         tabIndex="3"
         className="mb-3"
         disabled={isLoading}
@@ -113,6 +118,7 @@ const LoginPage = () => {
       <Button
         variant="danger"
         type="button"
+        // @ts-ignore
         tabIndex="4"
         className="mb-3"
         onClick={() =>
@@ -126,7 +132,9 @@ const LoginPage = () => {
       <Form.Group className="mb-3 text-center" controlId="register">
         <span>
           Don't have an account?&nbsp;
-          <Link to="/register" tabIndex="5" className="text-decoration-none">
+          <Link to="/register" 
+// @ts-ignore
+          tabIndex="5" className="text-decoration-none">
             Register now
           </Link>
         </span>

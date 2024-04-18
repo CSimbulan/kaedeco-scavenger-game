@@ -3,9 +3,10 @@ import { useNavigate } from "react-router-dom";
 
 import { AuthState } from "../../context/AuthProvider";
 import { Notify } from "../../utils";
+import {Box, Typography} from "@mui/material";
 import React from "react";
 
-const HomePage = () => {
+const GamesHomePage = () => {
   const [privateMessage, setPrivateMessage] = useState("");
 
   const navigate = useNavigate();
@@ -41,7 +42,11 @@ const HomePage = () => {
     // eslint-disable-next-line
   }, []);
 
-  return <span>{privateMessage}</span>;
+  return (
+    <Box display="flex" alignItems="center" justifyContent="center">
+      <Typography variant="h3">{privateMessage}</Typography>
+    </Box>
+  );
 };
 
-export default HomePage;
+export default GamesHomePage;

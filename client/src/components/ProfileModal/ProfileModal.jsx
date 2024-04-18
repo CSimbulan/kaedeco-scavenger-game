@@ -1,21 +1,25 @@
 import { Button, Image, Modal } from "react-bootstrap";
 
 import { AuthState } from "../../context/AuthProvider";
+import React from "react";
 
 const ProfileModal = ({ show, onHide }) => {
   const { auth } = AuthState();
+
+  console.log(auth)
 
   return (
     <Modal
       show={show}
       onHide={onHide}
+      // @ts-ignore
       size="md"
       aria-labelledby="contained-modal-title-vcenter"
       centered
     >
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
-          Your profile
+          Your profile a {auth.id}
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>

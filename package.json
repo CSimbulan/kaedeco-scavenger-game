@@ -1,7 +1,7 @@
 {
-  "name": "mern-stack-authentication-boilerplate",
+  "name": "kaedeco-scavenger-game",
   "version": "1.0.0",
-  "description": "Ultimate MERN Stack Authentication Boilerplate for production use",
+  "description": "scavenger hunt game for Kaede Co events",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
@@ -10,15 +10,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rtewari056/mern-stack-authentication-boilerplate.git"
+    "url": ""
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/rtewari056/mern-stack-authentication-boilerplate/issues"
+    "url": "",
   },
-  "homepage": "https://github.com/rtewari056/mern-stack-authentication-boilerplate#readme",
+  "homepage": "",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "dotenv": "^16.0.3",

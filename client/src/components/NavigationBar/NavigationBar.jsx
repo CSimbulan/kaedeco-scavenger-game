@@ -14,6 +14,8 @@ import { AuthState } from "../../context/AuthProvider";
 import ProfileModal from "../ProfileModal/ProfileModal";
 
 import "./NavigationBar.css";
+import React from "react";
+import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 
 const NavigationBar = () => {
   const [modalShow, setModalShow] = useState(false);
@@ -27,18 +29,24 @@ const NavigationBar = () => {
     return navigate("/login");
   };
 
+  const theme = useTheme();
+  const breakpointSmUp = useMediaQuery(theme.breakpoints.up("sm"));
+
   return (
     <Navbar collapseOnSelect expand="md" variant="dark" id="nav">
       <Container>
         <Navbar.Brand as={Link} to="/">
+          <Box display="flex" alignItems="center">
           <img
-            alt="Advanced Node Authentication Logo"
+            alt="KaedeCo Scavenger Hunt"
+            // @ts-ignore
             src={IMAGES.logo}
-            width="30"
             height="30"
             className="d-inline-block align-top"
           />
-          &nbsp;Advanced Node Authentication
+          {breakpointSmUp ? <Typography variant="h5" display="inline" ml={2} mt={1}>Scavenger Hunt</Typography> : <></>}
+          </Box>
+
         </Navbar.Brand>
 
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />

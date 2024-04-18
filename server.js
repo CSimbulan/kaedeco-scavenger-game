@@ -13,6 +13,8 @@ connectDB(); // Connect to databse
 // API Routes
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/private", require("./routes/private"));
+app.use("/api/sticker", require("./routes/sticker"));
+app.use("/api/game", require("./routes/game"));
 
 // --------------------------DEPLOYMENT------------------------------
 

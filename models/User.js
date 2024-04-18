@@ -22,6 +22,10 @@ const UserSchema = new mongoose.Schema(
       minlength: 8,
       select: false, // Whenever we query for a user, do we want to return password as well
     },
+    admin: {
+      type: Boolean,
+      default: false
+    },
     profilePic: {
       type: String,
       default:
