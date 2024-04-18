@@ -41,7 +41,6 @@ const createSticker = (req, res) => {
 }
 
 const updateStickerById = (req, res) => {
-    console.log('aaaa')
     Sticker.findById(req.params.id)
         .then((sticker) => {
 
@@ -56,6 +55,9 @@ const updateStickerById = (req, res) => {
             if (req.body.owners) { sticker.owners = req.body.owners; }
             if (req.body.artist) { sticker.artist = req.body.artist; }
 
+            if (req.body.owner) {
+                sticker.owners.push(req.body.owner)
+            }
             sticker
                 .save()
                 .then(() => res.json("Sticker updated!"))

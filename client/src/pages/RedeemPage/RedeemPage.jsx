@@ -1,22 +1,28 @@
 import { useState, useEffect } from "react";
+// @ts-ignore
 import { useNavigate, useParams, useRoutes } from "react-router-dom";
 
 import { AuthState } from "../../context/AuthProvider";
 import { Notify } from "../../utils";
 import {
+  // @ts-ignore
   Avatar,
   Box,
   Button,
   Divider,
+  // @ts-ignore
   Grid,
   Typography,
   styled,
   useTheme,
 } from "@mui/material";
 import React from "react";
+// @ts-ignore
 import dayjs from "dayjs";
+// @ts-ignore
 import StickerInfoModal from "components/StickerInfoModal/StickerInfoModal";
 
+// @ts-ignore
 const StickerOption = styled(Box)(({ theme }) => ({
   padding: 16,
   display: "flex",
@@ -31,6 +37,7 @@ const StickerOption = styled(Box)(({ theme }) => ({
 }));
 
 const RedeemPage = () => {
+  // @ts-ignore
   const theme = useTheme();
   const navigate = useNavigate();
   const { auth } = AuthState();
@@ -38,7 +45,6 @@ const RedeemPage = () => {
   const route = useParams();
 
   const [stickerData, setStickerData] = useState({});
-
 
   const fetchStickerData = async () => {
     try {
@@ -49,34 +55,31 @@ const RedeemPage = () => {
         },
       });
       const data = await response.json();
-      const stickerId = data._id
-      const owners = data.owners
+      const stickerId = data._id;
+
       setStickerData(data);
       if (!data.owners.includes(auth.id)) {
         try {
-            console.log(stickerId)
-            const temp = owners
-            temp.push(auth.id)
-            const response = await fetch(`/api/sticker/update/${stickerId}`, {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                owners: temp
-              }),
-            });
-            const data = await response.json();
-    
-            if (data.success) {
-              Notify("Stick updated", "success");
-            } else {
-              return Notify(data.error, "warn");
-            }
-          } catch (error) {
-            return Notify("Internal server error", "error");
+          const response = await fetch(`/api/sticker/update/${stickerId}`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              owner: auth.id,
+            }),
+          });
+          const data = await response.json();
+
+          if (data.success) {
+            Notify("Stick updated", "success");
+          } else {
+            return Notify(data.error, "warn");
           }
-        };
+        } catch (error) {
+          return Notify("Internal server error", "error");
+        }
+      }
     } catch (error) {
       return Notify("Internal server error", "error");
     }
@@ -102,14 +105,48 @@ const RedeemPage = () => {
           pt={8}
           flexDirection="column"
         >
-          <img src={stickerData.image} alt="Game Picture" width="300" />
-          <Typography variant="h4">{stickerData.name}</Typography>
-          <Typography>{stickerData.description}</Typography>
-          <Typography>{stickerData._id}</Typography>
+          <img
+            src={
+              // @ts-ignore
+              stickerData.image
+            }
+            alt="Game Picture"
+            width="300"
+          />
+          <Typography variant="h4">
+            {
+              // @ts-ignore
+              stickerData.name
+            }
+          </Typography>
+          <Typography>
+            {
+              // @ts-ignore
+              stickerData.description
+            }
+          </Typography>
+          <Typography>
+            {
+              // @ts-ignore
+              stickerData._id
+            }
+          </Typography>
           <Typography>{auth.id}</Typography>
-          
+
           <Divider />
-          <Button variant="contained" onClick={()=>navigate(`/game/${stickerData.linkedGames[0]}`)}>View Sticker Book</Button>
+          <Button
+            variant="contained"
+            onClick={() =>
+              navigate(
+                `/game/${
+                  // @ts-ignore
+                  stickerData.linkedGames[0]
+                }`
+              )
+            }
+          >
+            View Sticker Book
+          </Button>
         </Box>
       ) : (
         <Typography>Unauthorized</Typography>
