@@ -44,10 +44,17 @@ const StickerModal = ({ open, onClose, sticker }) => {
             mt={2}
           >
             {sticker.artist.socials.instagram && (
-              <Box display="flex" alignItems="center" justifyContent="left" mb={2}>
+              <Box
+                display="flex"
+                alignItems="center"
+                justifyContent="left"
+                mb={2}
+              >
                 <SocialIcon
                   url={`https://www.instagram.com/${sticker.artist.socials.instagram}`}
                   style={{ height: 32, width: 32, marginRight: 16 }}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   network="instagram"
                 />
                 <Typography variant="body2">
@@ -56,10 +63,17 @@ const StickerModal = ({ open, onClose, sticker }) => {
               </Box>
             )}
             {sticker.artist.socials.twitter && (
-              <Box display="flex" alignItems="center" justifyContent="left" mb={2}>
+              <Box
+                display="flex"
+                alignItems="center"
+                justifyContent="left"
+                mb={2}
+              >
                 <SocialIcon
                   url={`https://www.x.com/${sticker.artist.socials.twitter}`}
                   style={{ height: 32, width: 32, marginRight: 16 }}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   network="twitter"
                 />
                 <Typography variant="body2">
@@ -68,10 +82,17 @@ const StickerModal = ({ open, onClose, sticker }) => {
               </Box>
             )}
             {sticker.artist.socials.tiktok && (
-              <Box display="flex" alignItems="center" justifyContent="left" mb={2}>
+              <Box
+                display="flex"
+                alignItems="center"
+                justifyContent="left"
+                mb={2}
+              >
                 <SocialIcon
                   url={`https://www.tiktok.com/${sticker.artist.socials.tiktok}`}
                   style={{ height: 32, width: 32, marginRight: 16 }}
+                  target="_blank"
+                  rel="noopener noreferrer"
                 />
                 <Typography variant="body2">
                   {sticker.artist.socials.tiktok}
@@ -79,10 +100,17 @@ const StickerModal = ({ open, onClose, sticker }) => {
               </Box>
             )}
             {sticker.artist.socials.twitch && (
-              <Box display="flex" alignItems="center" justifyContent="left" mb={2}>
+              <Box
+                display="flex"
+                alignItems="center"
+                justifyContent="left"
+                mb={2}
+              >
                 <SocialIcon
                   url={`https://www.twitch.com/${sticker.artist.socials.twitch}`}
                   style={{ height: 32, width: 32, marginRight: 16 }}
+                  target="_blank"
+                  rel="noopener noreferrer"
                 />
                 <Typography variant="body2">
                   {sticker.artist.socials.twitch}
@@ -90,10 +118,17 @@ const StickerModal = ({ open, onClose, sticker }) => {
               </Box>
             )}
             {sticker.artist.socials.youtube && (
-              <Box display="flex" alignItems="center" justifyContent="left" mb={2}>
+              <Box
+                display="flex"
+                alignItems="center"
+                justifyContent="left"
+                mb={2}
+              >
                 <SocialIcon
                   url={`https://www.youtube.com/channel/${sticker.artist.socials.youtube}`}
                   style={{ height: 32, width: 32, marginRight: 16 }}
+                  target="_blank"
+                  rel="noopener noreferrer"
                 />
                 <Typography variant="body2">
                   {sticker.artist.socials.youtube}
