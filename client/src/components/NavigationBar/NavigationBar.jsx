@@ -37,16 +37,21 @@ const NavigationBar = () => {
       <Container>
         <Navbar.Brand as={Link} to="/">
           <Box display="flex" alignItems="center">
-          <img
-            alt="KaedeCo Scavenger Hunt"
-            // @ts-ignore
-            src={IMAGES.logo}
-            height="30"
-            className="d-inline-block align-top"
-          />
-          {breakpointSmUp ? <Typography variant="h5" display="inline" ml={2} mt={1}>Scavenger Hunt</Typography> : <></>}
+            <img
+              alt="KaedeCo Scavenger Hunt"
+              // @ts-ignore
+              src={IMAGES.logo}
+              height="30"
+              className="d-inline-block align-top"
+            />
+            {breakpointSmUp ? (
+              <Typography variant="h5" display="inline" ml={2} mt={1}>
+                Scavenger Hunt
+              </Typography>
+            ) : (
+              <></>
+            )}
           </Box>
-
         </Navbar.Brand>
 
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
@@ -74,6 +79,16 @@ const NavigationBar = () => {
               />
 
               <Dropdown.Divider />
+
+              {auth.admin && (
+                <>
+                  {" "}
+                  <Dropdown.Item as="button" onClick={() => navigate("/admin")}>
+                    Admin
+                  </Dropdown.Item>
+                  <Dropdown.Divider />
+                </>
+              )}
 
               <Dropdown.Item as="button" onClick={logoutHandler}>
                 Log out
