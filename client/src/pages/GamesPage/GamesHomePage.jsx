@@ -3,18 +3,20 @@ import { useNavigate } from "react-router-dom";
 
 import { AuthState } from "../../context/AuthProvider";
 import { Notify } from "../../utils";
-import {Box, Typography} from "@mui/material";
+import { Avatar, Box, Typography } from "@mui/material";
 import React from "react";
+import { Button } from "react-bootstrap";
 
 const GamesHomePage = () => {
   const [privateMessage, setPrivateMessage] = useState("");
+  const [gamesData, setGamesData] = useState([]);
 
   const navigate = useNavigate();
   const { auth } = AuthState();
 
-  const fetchPrivateDate = async () => {
+  const fetchGameData = async () => {
     try {
-      const response = await fetch("/api/private", {
+      const response = await fetch("/api/game/", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -23,29 +25,52 @@ const GamesHomePage = () => {
       });
       const data = await response.json();
 
-      if (data.success) {
-        setPrivateMessage(data.data);
-        return Notify(data.data, "success");
+      if (data) {
+        // TODO: Non admins will see something different
+        setGamesData(data);
       } else {
-        navigate("/login");
-        return Notify("You are not authorized please login", "error");
+        return Notify("Error retrieving game data.", "error");
       }
     } catch (error) {
-      localStorage.removeItem("auth");
-      navigate("/login");
       return Notify("Internal server error", "error");
     }
   };
 
   useEffect(() => {
-    fetchPrivateDate();
+    fetchGameData();
     // eslint-disable-next-line
   }, []);
 
   return (
-    <Box display="flex" alignItems="center" justifyContent="center">
-      <Typography variant="h3">{privateMessage}</Typography>
-    </Box>
+    <>
+      {auth.admin ? (
+        <Box
+          display={"flex"}
+          alignItems="center"
+          justifyContent={"center"}
+          flexDirection={"column"}
+        >
+          {gamesData.map((game) => (
+            <Button
+              key={game._id}
+              href={`/game/${game._id}`}
+              variant="contained"
+              style={{ margin: 32, border: '3px solid #e57373', borderRadius: 10, width: 300 }}
+            >
+              <Box
+                display={"flex"}
+                alignItems="center"
+                justifyContent={"center"}
+              >
+                <Avatar src={game.image} style={{marginRight:32, width: 64, height: 64}}/> {game.name}
+              </Box>
+            </Button>
+          ))}
+        </Box>
+      ) : (
+        <></>
+      )}
+    </>
   );
 };
 
