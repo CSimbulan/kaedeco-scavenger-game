@@ -103,11 +103,17 @@ const GamePage = () => {
           flexDirection="column"
         >
           <img src={gameData.image} alt="Game Picture" width="300" />
-          <Typography variant="h4" style={{marginBottom: 16}}>{gameData.name}</Typography>
-          <Typography style={{marginBottom: 16}}>{gameData.description}</Typography>
-          <Divider variant="middle" pt={3} />
+          <Typography variant="h4" style={{ marginBottom: 16 }}>
+            {gameData.name}
+          </Typography>
+          <Typography style={{ marginBottom: 16 }}>
+            {
+              // @ts-ignore
+              gameData.description
+            }
+          </Typography>
           <Typography>Start: {dayjs(gameData.startDate).toString()}</Typography>
-          <Typography >End: {dayjs(gameData.endDate).toString()}</Typography>
+          <Typography>End: {dayjs(gameData.endDate).toString()}</Typography>
           <Divider />
           <Box
             minHeight={300}
@@ -137,7 +143,7 @@ const GamePage = () => {
                     </StickerOption>
                   ) : (
                     <Box
-                    p={2}
+                      p={2}
                       display="flex"
                       alignItems="center"
                       justifyContent="center"
