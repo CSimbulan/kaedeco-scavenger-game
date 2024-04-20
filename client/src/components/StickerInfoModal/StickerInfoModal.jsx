@@ -23,7 +23,7 @@ const StickerModal = ({ open, onClose, sticker }) => {
       <DialogTitle>{sticker.name}</DialogTitle>
       <DialogContent>
         <Box>
-          <img src={sticker.image} width={200} alt="sticker image"/>
+          <img src={sticker.image} width={200} alt="sticker"/>
           <Typography></Typography>
           <Typography>{sticker.description}</Typography>
           {auth.admin && <>

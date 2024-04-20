@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 // @ts-ignore
-import { useNavigate, useParams, useRoutes } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { AuthState } from "../../context/AuthProvider";
 import { Notify } from "../../utils";
