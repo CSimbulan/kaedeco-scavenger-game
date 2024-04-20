@@ -35,9 +35,6 @@ const AdminPage = () => {
     <Typography variant="h2">
       Welcome back, {auth.name}
     </Typography>
-    <Typography>
-        aaa
-    </Typography>
     <Button variant="contained" style={{margin: 32}} onClick={onCreateNewGameButtonClick}>
       Create New Game
     </Button>

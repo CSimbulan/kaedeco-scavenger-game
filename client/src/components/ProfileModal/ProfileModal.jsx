@@ -17,7 +17,7 @@ const ProfileModal = ({ show, onHide }) => {
     >
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
-          Your profile a {auth.id}
+          Your profile
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
