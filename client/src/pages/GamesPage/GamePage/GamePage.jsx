@@ -131,6 +131,7 @@ const GamePage = () => {
 
   const theme = useTheme();
   const smallerScreens = useMediaQuery(theme.breakpoints.down("md"));
+  const largerScreens = useMediaQuery(theme.breakpoints.up("lg"));
 
   const handleStickerInfoModalClose = () => {
     setStickerInfoModalOpen(false);
@@ -235,8 +236,8 @@ const GamePage = () => {
                     bottom: "0%",
                     alignItems: "end",
                   }),
-                  width: smallerScreens ? "30vh" : "50vh",
-                  height: smallerScreens ? "30vh" : "50vh",
+                  width: smallerScreens ? 300 : largerScreens ? 700 : 500,
+                  height: smallerScreens ? 300 : largerScreens ? 700 : 500,
                   zIndex: -1,
                 }}
               >
