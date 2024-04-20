@@ -31,10 +31,18 @@ const StickerModal = ({ open, onClose, sticker }) => {
 
   return (
     <Dialog open={open} onClose={onClose}>
-      <DialogTitle>{sticker.name}</DialogTitle>
+      <DialogTitle align="center">{sticker.name}</DialogTitle>
       <DialogContent>
         <Box>
-          <img src={sticker.image} width={200} alt="sticker" />
+          <Box
+            width="100%"
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            mb={2}
+          >
+            <img src={sticker.image} width={200} alt="sticker" />
+          </Box>
           <Typography></Typography>
           <Typography>{sticker.description}</Typography>
           {auth.admin && (
@@ -49,7 +57,9 @@ const StickerModal = ({ open, onClose, sticker }) => {
                   />
                 </IconButton>
               </Typography>
-              <Button onClick={getRedeemLink} variant="contained">Copy Redeem Link</Button>
+              <Button onClick={getRedeemLink} variant="contained">
+                Copy Redeem Link
+              </Button>
             </>
           )}
           <Divider style={{ backgroundColor: "black", margin: 16 }} flexItem />
