@@ -18,17 +18,17 @@ app.use("/api/game", require("../routes/game"));
 
 // --------------------------DEPLOYMENT------------------------------
 
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "../client/build")));
+// if (process.env.NODE_ENV === "production") {
+//   app.use(express.static(path.join(__dirname, "../client/build")));
 
-  app.get("*", (req, res) => {
-    return res.sendFile(
-      path.resolve(__dirname, "client", "build", "index.html")
-    );
-  });
-} else {
+//   app.get("*", (req, res) => {
+//     return res.sendFile(
+//       path.resolve(__dirname, "client", "build", "index.html")
+//     );
+//   });
+// } else {
   app.get("/", (req, res) => res.send("Express on Vercel"));
-}
+// }
 
 // --------------------------DEPLOYMENT------------------------------
 
