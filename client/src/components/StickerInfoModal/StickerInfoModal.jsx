@@ -13,22 +13,45 @@ import { AuthState } from "../../context/AuthProvider";
 import React from "react";
 import { ContentCopy } from "@mui/icons-material";
 import { SocialIcon } from "react-social-icons";
+import { Notify } from "utils";
 
 const StickerModal = ({ open, onClose, sticker }) => {
+  const { auth } = AuthState();
 
-  const {auth} = AuthState();
+  const getRedeemLink = () => {
+    try {
+      navigator.clipboard.writeText(
+        `https://www.kaedeo.quest/redeem/${sticker._id}`
+      );
+      return Notify("Copied redeem link!", "success");
+    } catch {
+      Notify("Something went wrong!", "error");
+    }
+  };
 
   return (
     <Dialog open={open} onClose={onClose}>
       <DialogTitle>{sticker.name}</DialogTitle>
       <DialogContent>
         <Box>
-          <img src={sticker.image} width={200} alt="sticker"/>
+          <img src={sticker.image} width={200} alt="sticker" />
           <Typography></Typography>
           <Typography>{sticker.description}</Typography>
-          {auth.admin && <>
-          <Typography variant="body2">Sticker ID: {sticker._id} <IconButton><ContentCopy onClick={() => {navigator.clipboard.writeText(sticker._id)}}/></IconButton>
-            </Typography></>}
+          {auth.admin && (
+            <>
+              <Typography variant="body2">
+                Sticker ID: {sticker._id}{" "}
+                <IconButton>
+                  <ContentCopy
+                    onClick={() => {
+                      navigator.clipboard.writeText(sticker._id);
+                    }}
+                  />
+                </IconButton>
+              </Typography>
+              <Button onClick={getRedeemLink} variant="contained">Copy Redeem Link</Button>
+            </>
+          )}
           <Divider style={{ backgroundColor: "black", margin: 16 }} flexItem />
           <Typography variant="body2">Artist: {sticker.artist.name}</Typography>
           <Box
