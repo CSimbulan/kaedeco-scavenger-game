@@ -8,11 +8,7 @@ const errorHandler = require("../middleware/error");
 const cors = require('cors')
 
 const app = express();
-app.use(cors({
-  origin: ["https://kaedeco-scavenger-game-nu.vercel.app/*"],
-  methods: ["POST", "GET", "OPTIONS"],
-  credentials: true
-}));
+app.use(cors());
 app.use(express.json());
 connectDB(); // Connect to databse
 

@@ -1,12 +1,14 @@
 const express = require("express");
 const path = require("path");
 const dotenv = require("dotenv");
+const cors = require('cors')
 dotenv.config({ path: "./.env" });
 
 const connectDB = require("../config/db");
 const errorHandler = require("../middleware/error");
 
 const app = express();
+app.use(cors());
 app.use(express.json());
 connectDB(); // Connect to databse
 
@@ -14,7 +16,7 @@ connectDB(); // Connect to databse
 app.use("/api/auth", require("../routes/auth"));
 app.use("/api/private", require("../routes/private"));
 app.use("/api/sticker", require("../routes/sticker"));
-app.use("/api/game", require("../routes/game"));
+app.use("/api/game", require("../routes/game"));;
 
 // --------------------------DEPLOYMENT------------------------------
 
