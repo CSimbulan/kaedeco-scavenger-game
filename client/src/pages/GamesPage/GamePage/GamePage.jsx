@@ -34,7 +34,12 @@ const GamePage = () => {
 
   const route = useParams();
 
-  const [gameData, setGameData] = useState({});
+  const [gameData, setGameData] = useState({
+    name:"",
+    image: "",
+    startDate: null,
+    endDate: null
+  });
   const [stickerData, setStickerData] = useState([]);
   const [stickerInfoModalOpen, setStickerInfoModalOpen] = useState(false);
   const [selectedSticker, setSelectedSticker] = useState({});
