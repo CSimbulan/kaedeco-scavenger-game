@@ -41,6 +41,7 @@ const RedeemPage = () => {
       const data = await response.json();
       const stickerId = data._id;
       const stickerOwned = data.owners.includes(auth.id)
+      const gameId = data.linkedGames[0]
       setStickerData(data);
       setReedeming(!stickerOwned)
       if (!stickerOwned) {
@@ -53,14 +54,15 @@ const RedeemPage = () => {
             },
             body: JSON.stringify({
               owner: auth.id,
+              gameId: gameId
             }),
           });
-          const data = await response.json();
+          const updatedSitckerData = await response.json();
           setReedeming(false)
-          if (data.success) {
+          if (updatedSitckerData.success) {
             Notify("Sticker updated", "success");          
           } else {
-            return Notify(data.error, "warn");
+            return Notify(updatedSitckerData.error, "warn");
           }
         } catch (error) {
           return Notify("Internal server error", "error");

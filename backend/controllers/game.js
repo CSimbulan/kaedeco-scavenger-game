@@ -64,8 +64,8 @@ const updateGameById = (req, res) => {
 };
 
 const addParticipantToGame = (req, res) => {
-  Game.findByIdAndUpdate(
-    req.params.id,
+  Game.findOneAndUpdate(
+    { _id: req.params.id, participants: { $ne: req.body.owner } },
     { $push: { participants: req.body.user } },
     { safe: true, upsert: true }
   ).catch((err) => res.status(400).json("Error: " + err));
@@ -95,4 +95,5 @@ module.exports = {
   createGame,
   updateGameById,
   deleteGameById,
+  addParticipantToGame,
 };

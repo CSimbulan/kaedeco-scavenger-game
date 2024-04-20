@@ -1,6 +1,5 @@
 const Sticker = require("../models/Sticker");
-
-const ErrorResponse = require("../utils/errorResponse"); // As we will handle errors using "next()"
+const Game = require("../models/Game");
 
 const getAllStickers = (req, res) => {
   Sticker.find()
@@ -80,20 +79,37 @@ const updateStickerById = (req, res) => {
       }
       sticker
         .save()
-        .then(() => res.json("Sticker updated!"))
-        .catch((err) => res.status(400).json("Error: " + err));
+        .then(() => {
+            return res.json("Sticker updated!")
+        })
+        .catch((err) => {
+            return res.status(400).json("Error: " + err)
+        });
     })
-    .catch((err) => res.status(400).json("Error: " + err));
+    .catch((err) => {
+        return res.status(400).json("Error: " + err)
+    });
 };
 
 const addStickerOwner = (req, res) => {
-  Sticker.findByIdAndUpdate(
-    req.params.id,
-    { $push: { owners: req.body.owner } },
-    { safe: true, upsert: true }
-  )
-    .then(() => res.json("Sticker updated!"))
-    .catch((err) => res.status(400).json("Error: " + err));
+    const stickerPromise = Sticker.findOneAndUpdate(
+        { _id: req.params.id, owners: { $ne: req.body.owner } },
+        { $push: { owners: req.body.owner } },
+        { safe: true, upsert: true }
+    )
+
+    const gamePromise =   Game.findOneAndUpdate(
+        { _id: req.body.gameId, participants: { $ne: req.body.owner } },
+        { $push: { participants: req.body.owner } },
+        { safe: true, upsert: true }
+    )
+  Promise.all([stickerPromise, gamePromise])
+    .then((res) => {
+        return res.json("Sticker updated!")
+    })
+    .catch((err) => {
+        return res.status(400).json("Error: " + err)
+    });
 };
 
 const deleteStickerById = (req, res) => {
