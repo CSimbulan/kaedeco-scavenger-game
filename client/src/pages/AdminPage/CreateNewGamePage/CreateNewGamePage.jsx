@@ -108,6 +108,7 @@ const CreateNewGamePage = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${auth.token}`,
         },
         body: JSON.stringify({
           name: gameName,
@@ -130,6 +131,7 @@ const CreateNewGamePage = () => {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
+                Authorization: `Bearer ${auth.token}`,
               },
               body: JSON.stringify({
                 linkedGames: [gameId],

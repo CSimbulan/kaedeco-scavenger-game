@@ -27,6 +27,7 @@ const RedeemPage = () => {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${auth.token}`,
         },
       });
       const data = await response.json();
@@ -39,6 +40,7 @@ const RedeemPage = () => {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
+              Authorization: `Bearer ${auth.token}`,
             },
             body: JSON.stringify({
               owner: auth.id,

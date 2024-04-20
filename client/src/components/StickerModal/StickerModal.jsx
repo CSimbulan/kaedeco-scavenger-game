@@ -111,6 +111,7 @@ const StickerModal = ({ open, onClose, onSelectSticker, selectedStickers }) => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${auth.token}`,
         },
         body: JSON.stringify({
           name: stickerName,

@@ -54,6 +54,7 @@ const GamePage = () => {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${auth.token}`,
         },
       });
       const data = await response.json();
@@ -65,6 +66,7 @@ const GamePage = () => {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
+              Authorization: `Bearer ${auth.token}`,
             },
           });
           const data = await response.json();
