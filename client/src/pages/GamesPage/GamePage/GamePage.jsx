@@ -96,8 +96,8 @@ const HintBox = styled(Box, {
   backgroundColor: gameColor ? gameColor[200] : "gray",
   borderRadius: 2,
   width: "80%",
-  padding: 32,
-  margin: 32,
+  padding: 16,
+  margin: 16,
   boxShadow: `10px 10px ${
     gameColor ? gameColor[300] : theme.palette.grey[200]
   }`,
@@ -329,14 +329,14 @@ const GamePage = () => {
               // @ts-ignore
               gameColor={themeColor}
             >
-              <Box width="100%" display="flex" justifyContent="center" alignItems="center" flexDirection="column"> 
+              <Box width="100%" display="flex" justifyContent="center" alignItems="center" flexDirection="column" py={2}> 
               {stickerData.map((sticker, index) => (
                 <>
                   <HintBox
                     // @ts-ignore
                     gameColor={themeColor}
                   >
-                    <Typography variant="h5" align="center" style={{marginBottom: 16}}>
+                    <Typography variant="h5" align="center">
                       Hint #{index + 1}
                     </Typography>
                     <Typography>
