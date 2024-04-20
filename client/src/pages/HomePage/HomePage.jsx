@@ -7,10 +7,8 @@ import React from "react";
 import { Avatar, Box, Button, Typography } from "@mui/material";
 
 const HomePage = () => {
-  const [privateMessage, setPrivateMessage] = useState("");
   const [gamesData, setGamesData] = useState([]);
 
-  const navigate = useNavigate();
   const { auth } = AuthState();
 
   const fetchGameData = async () => {

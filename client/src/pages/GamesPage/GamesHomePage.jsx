@@ -3,15 +3,13 @@ import { useNavigate } from "react-router-dom";
 
 import { AuthState } from "../../context/AuthProvider";
 import { Notify } from "../../utils";
-import { Avatar, Box, Typography } from "@mui/material";
+import { Avatar, Box } from "@mui/material";
 import React from "react";
 import { Button } from "react-bootstrap";
 
 const GamesHomePage = () => {
-  const [privateMessage, setPrivateMessage] = useState("");
   const [gamesData, setGamesData] = useState([]);
 
-  const navigate = useNavigate();
   const { auth } = AuthState();
 
   const fetchGameData = async () => {

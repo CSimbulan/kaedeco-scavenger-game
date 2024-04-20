@@ -5,40 +5,15 @@ import { useNavigate, useParams, useRoutes } from "react-router-dom";
 import { AuthState } from "../../context/AuthProvider";
 import { Notify } from "../../utils";
 import {
-  // @ts-ignore
-  Avatar,
   Box,
   Button,
   Divider,
-  // @ts-ignore
-  Grid,
   Typography,
-  styled,
-  useTheme,
 } from "@mui/material";
 import React from "react";
-// @ts-ignore
-import dayjs from "dayjs";
-// @ts-ignore
-import StickerInfoModal from "components/StickerInfoModal/StickerInfoModal";
 
-// @ts-ignore
-const StickerOption = styled(Box)(({ theme }) => ({
-  padding: 16,
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  flexDirection: "column",
-  position: "relative",
-  "&:hover": {
-    cursor: "pointer",
-    backgroundColor: theme.palette.grey[200],
-  },
-}));
 
 const RedeemPage = () => {
-  // @ts-ignore
-  const theme = useTheme();
   const navigate = useNavigate();
   const { auth } = AuthState();
 
@@ -110,7 +85,7 @@ const RedeemPage = () => {
               // @ts-ignore
               stickerData.image
             }
-            alt="Game Picture"
+            alt="game profile"
             width="300"
           />
           <Typography variant="h4">

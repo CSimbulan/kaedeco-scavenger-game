@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate, useParams, useRoutes } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { AuthState } from "../../../context/AuthProvider";
 import { Notify } from "../../../utils";
@@ -10,7 +10,6 @@ import {
   Grid,
   Typography,
   styled,
-  useTheme,
 } from "@mui/material";
 import React from "react";
 import dayjs from "dayjs";
@@ -30,7 +29,6 @@ const StickerOption = styled(Box)(({ theme }) => ({
 }));
 
 const GamePage = () => {
-  const theme = useTheme();
   const navigate = useNavigate();
   const { auth } = AuthState();
 
@@ -102,7 +100,7 @@ const GamePage = () => {
           pt={8}
           flexDirection="column"
         >
-          <img src={gameData.image} alt="Game Picture" width="300" />
+          <img src={gameData.image} alt="game profile" width="300" />
           <Typography variant="h4" style={{ marginBottom: 16 }}>
             {gameData.name}
           </Typography>

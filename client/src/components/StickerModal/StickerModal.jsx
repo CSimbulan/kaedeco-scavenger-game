@@ -15,7 +15,6 @@ import {
   TextField,
   Typography,
   styled,
-  useTheme,
 } from "@mui/material";
 import { AuthState } from "../../context/AuthProvider";
 import React, { useEffect, useState } from "react";
@@ -62,8 +61,6 @@ const StickerModal = ({ open, onClose, onSelectSticker, selectedStickers }) => {
   const [artistTiktok, setArtistTiktok] = useState("");
 
   const [stickerData, setStickerData] = useState([]);
-
-  const theme = useTheme();
 
   const onStickerNameChange = (e) => {
     setStickerName(e.target.value);

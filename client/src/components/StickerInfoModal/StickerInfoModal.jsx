@@ -1,8 +1,4 @@
 import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  Avatar,
   Box,
   Button,
   Dialog,
@@ -10,18 +6,12 @@ import {
   DialogContent,
   DialogTitle,
   Divider,
-  FormGroup,
-  Grid,
   IconButton,
-  TextField,
   Typography,
-  styled,
-  useTheme,
 } from "@mui/material";
 import { AuthState } from "../../context/AuthProvider";
-import React, { useEffect, useState } from "react";
-import { ContentCopy, ExpandMore, Instagram } from "@mui/icons-material";
-import { Notify } from "../../utils";
+import React from "react";
+import { ContentCopy } from "@mui/icons-material";
 import { SocialIcon } from "react-social-icons";
 
 const StickerModal = ({ open, onClose, sticker }) => {
@@ -33,7 +23,7 @@ const StickerModal = ({ open, onClose, sticker }) => {
       <DialogTitle>{sticker.name}</DialogTitle>
       <DialogContent>
         <Box>
-          <img src={sticker.image} width={200} />
+          <img src={sticker.image} width={200} alt="sticker image"/>
           <Typography></Typography>
           <Typography>{sticker.description}</Typography>
           {auth.admin && <>
