@@ -1,25 +1,25 @@
 const express = require("express");
 const path = require("path");
 const dotenv = require("dotenv");
-dotenv.config({ path: "./.env" });
+dotenv.config({ path: "../.env" });
 
-const connectDB = require("./config/db");
-const errorHandler = require("./middleware/error");
+const connectDB = require("../config/db");
+const errorHandler = require("../middleware/error");
 
 const app = express();
 app.use(express.json());
 connectDB(); // Connect to databse
 
 // API Routes
-app.use("/api/auth", require("./routes/auth"));
-app.use("/api/private", require("./routes/private"));
-app.use("/api/sticker", require("./routes/sticker"));
-app.use("/api/game", require("./routes/game"));
+app.use("/api/auth", require("../routes/auth"));
+app.use("/api/private", require("../routes/private"));
+app.use("/api/sticker", require("../routes/sticker"));
+app.use("/api/game", require("../routes/game"));
 
 // --------------------------DEPLOYMENT------------------------------
 
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "./client/build")));
+  app.use(express.static(path.join(__dirname, "../client/build")));
 
   app.get("*", (req, res) => {
     return res.sendFile(
