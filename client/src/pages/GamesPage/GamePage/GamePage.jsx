@@ -13,7 +13,14 @@ import {
 } from "@mui/material";
 import React from "react";
 import dayjs from "dayjs";
+import timezone from 'dayjs/plugin/timezone'
+import utc from 'dayjs/plugin/utc'
+import LocalizedFormat from 'dayjs/plugin/localizedFormat'
 import StickerInfoModal from "components/StickerInfoModal/StickerInfoModal";
+
+dayjs.extend(utc)
+dayjs.extend(timezone)
+dayjs.extend(LocalizedFormat)
 
 const StickerOption = styled(Box)(({ theme }) => ({
   padding: 16,
@@ -117,8 +124,8 @@ const GamePage = () => {
               gameData.description
             }
           </Typography>
-          <Typography>Start: {dayjs(gameData.startDate).toString()}</Typography>
-          <Typography>End: {dayjs(gameData.endDate).toString()}</Typography>
+          <Typography>Start: {dayjs(gameData.startDate).tz("America/Toronto").format('LLLL')}</Typography>
+          <Typography>End: {dayjs(gameData.endDate).tz("America/Toronto").format('LLLL')}</Typography>
           <Divider />
           <Box
             minHeight={300}
