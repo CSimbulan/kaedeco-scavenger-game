@@ -50,7 +50,7 @@ const GamePage = () => {
 
   const fetchGameData = async () => {
     try {
-      const response = await fetch(`/api/game/${route.id}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/game/${route.id}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -61,7 +61,7 @@ const GamePage = () => {
       const stickers = [];
       for (const sticker of data.stickers) {
         try {
-          const response = await fetch(`/api/sticker/${sticker}`, {
+          const response = await fetch(`${process.env.REACT_APP_API_URL}/api/sticker/${sticker}`, {
             method: "GET",
             headers: {
               "Content-Type": "application/json",

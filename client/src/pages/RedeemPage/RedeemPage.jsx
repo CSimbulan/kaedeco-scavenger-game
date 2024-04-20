@@ -23,7 +23,7 @@ const RedeemPage = () => {
 
   const fetchStickerData = async () => {
     try {
-      const response = await fetch(`/api/sticker/${route.id}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/sticker/${route.id}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -35,7 +35,7 @@ const RedeemPage = () => {
       setStickerData(data);
       if (!data.owners.includes(auth.id)) {
         try {
-          const response = await fetch(`/api/sticker/update/${stickerId}`, {
+          const response = await fetch(`${process.env.REACT_APP_API_URL}/api/sticker/update/${stickerId}`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",

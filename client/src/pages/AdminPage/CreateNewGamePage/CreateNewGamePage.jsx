@@ -104,7 +104,7 @@ const CreateNewGamePage = () => {
     }
 
     try {
-      const response = await fetch("/api/game/add", {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/game/add`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -126,7 +126,7 @@ const CreateNewGamePage = () => {
         try {
           for (const sticker of stickers) {
             // @ts-ignore
-            const response = await fetch(`/api/sticker/update/${sticker.id}`, {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/sticker/update/${sticker.id}`, {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",

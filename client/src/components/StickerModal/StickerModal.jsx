@@ -107,7 +107,7 @@ const StickerModal = ({ open, onClose, onSelectSticker, selectedStickers }) => {
     }
 
     try {
-      const response = await fetch("/api/sticker/add", {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/sticker/add`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -147,7 +147,7 @@ const StickerModal = ({ open, onClose, onSelectSticker, selectedStickers }) => {
 
   const fetchStickerData = async () => {
     try {
-      const response = await fetch("/api/sticker/", {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/sticker/`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

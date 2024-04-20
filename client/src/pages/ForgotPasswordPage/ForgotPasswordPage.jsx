@@ -3,6 +3,7 @@ import { Form, Button, Spinner, Container } from "react-bootstrap";
 
 import IMAGES from "../../assets";
 import { Notify } from "../../utils";
+import React from "react";
 
 const ForgotPasswordScreen = () => {
   const [email, setEmail] = useState("");
@@ -20,7 +21,7 @@ const ForgotPasswordScreen = () => {
     }
 
     try {
-      const response = await fetch("/api/auth/forgotPassword", {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/auth/forgotPassword`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -74,6 +75,7 @@ const ForgotPasswordScreen = () => {
             <Form.Control
               type="email"
               name="email"
+              // @ts-ignore
               tabIndex="1"
               placeholder="you@email.com"
               value={email}
@@ -85,6 +87,7 @@ const ForgotPasswordScreen = () => {
             variant="success"
             type="submit"
             className="mb-3"
+            // @ts-ignore
             tabIndex="2"
             disabled={isLoading}
           >

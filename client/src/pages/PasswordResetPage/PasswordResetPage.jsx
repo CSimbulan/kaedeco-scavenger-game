@@ -4,6 +4,7 @@ import { Form, Button, Spinner, Container } from "react-bootstrap";
 
 import IMAGES from "../../assets";
 import { Notify } from "../../utils";
+import React from "react";
 
 const PasswordResetPage = () => {
   const [credentials, setCredentials] = useState({
@@ -42,7 +43,7 @@ const PasswordResetPage = () => {
     }
 
     try {
-      const response = await fetch(`/api/auth/resetPassword/${resetToken}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/auth/resetPassword/${resetToken}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -95,6 +96,7 @@ const PasswordResetPage = () => {
             <Form.Control
               type="password"
               name="password"
+              // @ts-ignore
               tabIndex="1"
               placeholder="Enter new password"
               value={credentials.password}
@@ -110,6 +112,7 @@ const PasswordResetPage = () => {
             <Form.Control
               type="password"
               name="confirmPassword"
+              // @ts-ignore
               tabIndex="2"
               placeholder="Confirm new password"
               value={credentials.confirmPassword}
@@ -121,6 +124,7 @@ const PasswordResetPage = () => {
           </Form.Group>
 
           <Button
+            // @ts-ignore
             tabIndex="3"
             variant="success"
             type="submit"
