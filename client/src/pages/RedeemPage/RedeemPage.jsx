@@ -7,6 +7,7 @@ import { Notify } from "../../utils";
 import {
   Box,
   Button,
+  CircularProgress,
   Divider,
   Typography,
 } from "@mui/material";
@@ -19,7 +20,14 @@ const RedeemPage = () => {
 
   const route = useParams();
 
-  const [stickerData, setStickerData] = useState({});
+  const [stickerData, setStickerData] = useState({
+    name: "",
+    image: "",
+    description: "",
+    linkedGames: [],
+    owners: [],
+  });
+  const [redeeming, setReedeming] = useState(true)
 
   const fetchStickerData = async () => {
     try {
@@ -32,11 +40,12 @@ const RedeemPage = () => {
       });
       const data = await response.json();
       const stickerId = data._id;
-
+      const stickerOwned = data.owners.includes(auth.id)
       setStickerData(data);
-      if (!data.owners.includes(auth.id)) {
+      setReedeming(!stickerOwned)
+      if (!stickerOwned) {
         try {
-          const response = await fetch(`${process.env.REACT_APP_API_URL}/api/sticker/update/${stickerId}`, {
+          const response = await fetch(`${process.env.REACT_APP_API_URL}/api/sticker/addowner/${stickerId}`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -47,9 +56,9 @@ const RedeemPage = () => {
             }),
           });
           const data = await response.json();
-
+          setReedeming(false)
           if (data.success) {
-            Notify("Stick updated", "success");
+            Notify("Sticker updated", "success");          
           } else {
             return Notify(data.error, "warn");
           }
@@ -84,31 +93,25 @@ const RedeemPage = () => {
         >
           <img
             src={
-              // @ts-ignore
               stickerData.image
             }
             alt="game profile"
             width="300"
           />
-          <Typography variant="h4">
+          <Typography variant="h4" style={{marginBottom: 32}}>
             {
-              // @ts-ignore
               stickerData.name
             }
           </Typography>
-          <Typography>
+          <Typography  style={{marginBottom: 32}}>
             {
-              // @ts-ignore
               stickerData.description
             }
           </Typography>
-          <Typography>
-            {
-              // @ts-ignore
-              stickerData._id
-            }
-          </Typography>
-          <Typography>{auth.id}</Typography>
+          {redeeming ? <>
+            <Typography>Redeeming...</Typography>
+            <CircularProgress  style={{marginBottom: 32}}/>
+          </> : <Typography  style={{marginBottom: 32}}>You have redeemed this sticker.</Typography>}
 
           <Divider />
           <Button
@@ -116,7 +119,6 @@ const RedeemPage = () => {
             onClick={() =>
               navigate(
                 `/game/${
-                  // @ts-ignore
                   stickerData.linkedGames[0]
                 }`
               )
