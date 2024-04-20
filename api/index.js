@@ -1,25 +1,25 @@
 const express = require("express");
 const path = require("path");
 const dotenv = require("dotenv");
-dotenv.config({ path: "./.env" });
+dotenv.config({ path: "../.env" });
 
-const connectDB = require("./config/db");
-const errorHandler = require("./middleware/error");
+const connectDB = require("../config/db");
+const errorHandler = require("../middleware/error");
 
 const app = express();
 app.use(express.json());
 connectDB(); // Connect to databse
 
 // API Routes
-app.use("/api/auth", require("./routes/auth"));
-app.use("/api/private", require("./routes/private"));
-app.use("/api/sticker", require("./routes/sticker"));
-app.use("/api/game", require("./routes/game"));
+app.use("/api/auth", require("../routes/auth"));
+app.use("/api/private", require("../routes/private"));
+app.use("/api/sticker", require("../routes/sticker"));
+app.use("/api/game", require("../routes/game"));
 
 // --------------------------DEPLOYMENT------------------------------
 
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "./client/build")));
+  app.use(express.static(path.join(__dirname, "../client/build")));
 
   app.get("*", (req, res) => {
     return res.sendFile(
@@ -29,7 +29,7 @@ if (process.env.NODE_ENV === "production") {
 } else {
   app.get("/", (req, res) => {
     res.json({
-        message: "asdjhwjk834r7u239o8y4r io3u24rek 2jr3lkjr3kjr 3kl2j3k2 jr3k"
+        message: "Server running!"
     })
   });
 }
@@ -41,12 +41,14 @@ app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 
-const server = app.listen(PORT, () =>
+app.listen(PORT, () =>
   console.log(`Server running on PORT ${PORT}`)
 );
 
-// Handling server errors with clean error messages
-process.on("unhandledRejection", (err, promise) => {
-  console.log(`Logged Error: ${err.message}`);
-  server.close(() => process.exit(1));
-});
+// // Handling server errors with clean error messages
+// process.on("unhandledRejection", (err, promise) => {
+//   console.log(`Logged Error: ${err.message}`);
+//   server.close(() => process.exit(1));
+// });
+
+export default app

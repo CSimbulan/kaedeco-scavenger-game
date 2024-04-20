@@ -1,7 +1,7 @@
 const express = require("express");
 const path = require("path");
 const dotenv = require("dotenv");
-dotenv.config({ path: "../.env" });
+dotenv.config({ path: "./.env" });
 
 const connectDB = require("../config/db");
 const errorHandler = require("../middleware/error");
@@ -19,7 +19,7 @@ app.use("/api/game", require("../routes/game"));
 // --------------------------DEPLOYMENT------------------------------
 
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "../client/build")));
+  app.use(express.static(path.join(__dirname, "./client/build")));
 
   app.get("*", (req, res) => {
     return res.sendFile(
@@ -28,9 +28,7 @@ if (process.env.NODE_ENV === "production") {
   });
 } else {
   app.get("/", (req, res) => {
-    res.json({
-        message: "asdjhwjk834r7u239o8y4r io3u24rek 2jr3lkjr3kjr 3kl2j3k2 jr3k"
-    })
+    res.send("API is running");
   });
 }
 
