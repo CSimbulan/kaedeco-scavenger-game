@@ -21,7 +21,7 @@ const StickerModal = ({ open, onClose, sticker }) => {
   const getRedeemLink = () => {
     try {
       navigator.clipboard.writeText(
-        `https://www.kaedeo.quest/redeem/${sticker._id}`
+        `https://www.kaedeco.quest/redeem/${sticker._id}`
       );
       return Notify("Copied redeem link!", "success");
     } catch {
