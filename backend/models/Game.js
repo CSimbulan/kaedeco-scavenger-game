@@ -14,7 +14,8 @@ const GameSchema = new mongoose.Schema(
     endDate: Date,
     sequential: Boolean, // If the scavenger hunt needs to find items in a specific order,
     stickers: Array,
-    test: {type: Boolean, default: false}
+    test: {type: Boolean, default: false},
+    assets: Schema.Types.Mixed,
   },
   { timestamps: true }
 );
