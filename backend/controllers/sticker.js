@@ -41,7 +41,7 @@ const createSticker = (req, res) => {
 }
 
 const updateStickerById = (req, res) => {
-    Sticker.findById(req.params.id)
+    Sticker.findByIdAndUpdate(req.params.id)
         .then((sticker) => {
 
             sticker.name = req.body.name || sticker.name;
