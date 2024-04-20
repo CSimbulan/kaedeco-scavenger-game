@@ -30,19 +30,23 @@ const TabButton = styled(Button)(({ theme }) => ({
 }));
 
 const StickerOption = styled(Box, {
-    // @ts-ignore
-    shouldForwardProp: (prop) => prop !== 'selected' })(({ theme, selected }) => ({
-    padding: 2,
-    display: 'flex',
-    alignItems: "center",
-    justifyContent: "center",
-    flexDirection: "column",
-    position: "relative",
-    backgroundColor: selected ? theme.palette.info.dark : theme.palette.common.white,
-    '&:hover': {
-        cursor: 'pointer',
-        backgroundColor: !selected && theme.palette.grey[200] 
-      },
+  // @ts-ignore
+  shouldForwardProp: (prop) => prop !== "selected",
+// @ts-ignore
+})(({ theme, selected }) => ({
+  padding: 2,
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  flexDirection: "column",
+  position: "relative",
+  backgroundColor: selected
+    ? theme.palette.info.dark
+    : theme.palette.common.white,
+  "&:hover": {
+    cursor: "pointer",
+    backgroundColor: !selected && theme.palette.grey[200],
+  },
 }));
 
 const StickerModal = ({ open, onClose, onSelectSticker, selectedStickers }) => {
@@ -107,28 +111,31 @@ const StickerModal = ({ open, onClose, onSelectSticker, selectedStickers }) => {
     }
 
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/sticker/add`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${auth.token}`,
-        },
-        body: JSON.stringify({
-          name: stickerName,
-          description: description,
-          image: imageUrl,
-          artist: {
-            name: artistName,
-            socials: {
-              instagram: artistInstagram,
-              twitter: artistTwitch,
-              tiktok: artistTiktok,
-              twitch: artistTwitch,
-              youtube: artistYoutube,
-            },
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/api/sticker/add`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${auth.token}`,
           },
-        }),
-      });
+          body: JSON.stringify({
+            name: stickerName,
+            description: description,
+            image: imageUrl,
+            artist: {
+              name: artistName,
+              socials: {
+                instagram: artistInstagram,
+                twitter: artistTwitch,
+                tiktok: artistTiktok,
+                twitch: artistTwitch,
+                youtube: artistYoutube,
+              },
+            },
+          }),
+        }
+      );
       const data = await response.json();
       if (data.success) {
         setSelectedSticker(data);
@@ -148,19 +155,22 @@ const StickerModal = ({ open, onClose, onSelectSticker, selectedStickers }) => {
 
   const fetchStickerData = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/sticker/`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${auth.token}`,
-        },
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/api/sticker/`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${auth.token}`,
+          },
+        }
+      );
       const data = await response.json();
 
       if (data) {
         // Filter the data for stickers that are not already selected for the game.
-        const temp1 = selectedStickers.map(s => s.id);
-        setStickerData(data.filter(sticker => !temp1.includes(sticker._id)));
+        const temp1 = selectedStickers.map((s) => s.id);
+        setStickerData(data.filter((sticker) => !temp1.includes(sticker._id)));
       } else {
         return Notify("Error retrieving sticker data.", "error");
       }
@@ -176,12 +186,11 @@ const StickerModal = ({ open, onClose, onSelectSticker, selectedStickers }) => {
 
   const changeSelectedSticker = (sticker) => {
     setSelectedSticker({
-        name: sticker.name,
-        id: sticker._id,
-        image: sticker.image
-    })
-  }
-
+      name: sticker.name,
+      id: sticker._id,
+      image: sticker.image,
+    });
+  };
 
   return (
     <Dialog open={open} onClose={onClose}>
@@ -208,17 +217,20 @@ const StickerModal = ({ open, onClose, onSelectSticker, selectedStickers }) => {
           {useExistingSticker ? (
             <Box minHeight={300} border="1px solid gray" borderRadius={2} p={2}>
               <Grid container>
-              {stickerData.map((sticker, index) => (
-                <Grid item xs={4} key={sticker.id}>
-                  <StickerOption 
-                  // @ts-ignore
-                  selected={sticker._id === selectedSticker.id}
-                  onClick={() => changeSelectedSticker(sticker)}>
-                    <Avatar sizes="sm" src={sticker.image} />
-                    <Typography textAlign="center">{sticker.name}</Typography>
-                  </StickerOption>
-                </Grid>
-              ))}
+                {stickerData.map((sticker, 
+// @ts-ignore
+                index) => (
+                  <Grid item xs={4} key={sticker.id}>
+                    <StickerOption
+                      // @ts-ignore
+                      selected={sticker._id === selectedSticker.id}
+                      onClick={() => changeSelectedSticker(sticker)}
+                    >
+                      <Avatar sizes="sm" src={sticker.image} />
+                      <Typography textAlign="center">{sticker.name}</Typography>
+                    </StickerOption>
+                  </Grid>
+                ))}
               </Grid>
             </Box>
           ) : (
@@ -306,6 +318,8 @@ const StickerModal = ({ open, onClose, onSelectSticker, selectedStickers }) => {
       <DialogActions>
         <Button onClick={onClose}>Cancel</Button>
         <Button
+          // @ts-ignore
+          disabled={!selectedSticker.id}
           type={useExistingSticker ? "button" : "submit"}
           onClick={
             useExistingSticker
