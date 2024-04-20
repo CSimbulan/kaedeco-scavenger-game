@@ -3,7 +3,7 @@ const Game = require("../models/Game");
 const ErrorResponse = require("../utils/errorResponse"); // As we will handle errors using "next()"
 
 const getAllGames = (req, res) => {
-  Game.find()
+  Game.find(req.query.admin ? {} : {test: false})
     .then((games) => res.json(games))
     .catch((err) => res.status(400).json("Error: " + err));
 };

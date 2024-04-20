@@ -12,7 +12,7 @@ const HomePage = () => {
 
   const fetchGameData = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/game/`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/game/${auth.admin ? "?admin=true": ""}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
