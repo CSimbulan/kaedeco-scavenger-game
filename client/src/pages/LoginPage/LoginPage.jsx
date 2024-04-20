@@ -88,8 +88,10 @@ const LoginPage = () => {
           onChange={(e) => handleCredentials(e)}
         />
       </Form.Group>
+      
+      <hr />
 
-      <Form.Group className="mb-3 mt-1 text-center" controlId="register">
+      {/* <Form.Group className="mb-3 mt-1 text-center" controlId="register">
         <Link
           to="/forgotPassword"
           // @ts-ignore
@@ -98,7 +100,7 @@ const LoginPage = () => {
         >
           Forgot password?
         </Link>
-      </Form.Group>
+      </Form.Group> */}
 
       <Button
         variant="success"
@@ -115,7 +117,7 @@ const LoginPage = () => {
         )}
       </Button>
 
-      <Button
+      {/* <Button
         variant="danger"
         type="button"
         // @ts-ignore
@@ -127,7 +129,7 @@ const LoginPage = () => {
       >
         <FaUserAlt className="me-2" />
         Get Guest User Credentials
-      </Button>
+      </Button> */}
 
       <Form.Group className="mb-3 text-center" controlId="register">
         <span>

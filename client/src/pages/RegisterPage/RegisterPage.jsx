@@ -219,7 +219,7 @@ const RegisterPage = () => {
         />
       </Form.Group>
 
-      <Form.Group controlId="profilePic" className="mb-3">
+      {/* <Form.Group controlId="profilePic" className="mb-3">
         <Form.Label>Upload profile picture</Form.Label>
         <Form.Control
           type="file"
@@ -230,7 +230,7 @@ const RegisterPage = () => {
           size="sm"
           onChange={(e) => handleProfilePic(e)}
         />
-      </Form.Group>
+      </Form.Group> */}
 
       <Button
         // @ts-ignore
