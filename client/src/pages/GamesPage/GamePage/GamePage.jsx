@@ -242,7 +242,7 @@ const GamePage = () => {
                   zIndex: -1,
                 }}
               >
-                <img src={asset.image} alt={`asset ${index}`} style={{height: 'auto', width: 'auto'}} />
+                <img src={asset.image} alt={`asset ${index}`} width="100%" height="auto" />
               </Box>
             ))}
           {/*Scavenger hunt information*/}
