@@ -234,7 +234,7 @@ const GamePage = () => {
                     alignItems: "start",
                   }),
                   ...(asset.verticalPosition === "bottom" && {
-                    bottom: "0%",
+                    bottom: 0,
                     alignItems: "end",
                   }),
                   width: smallerScreens ? 300 : largerScreens ? 700 : 500,
@@ -242,7 +242,7 @@ const GamePage = () => {
                   zIndex: -1,
                 }}
               >
-                <img src={asset.image} alt={`asset ${index}`} width="100%" height="100%"/>
+                <img src={asset.image} alt={`asset ${index}`} style={{height: 'auto', width: 'auto'}} />
               </Box>
             ))}
           {/*Scavenger hunt information*/}
@@ -299,9 +299,10 @@ const GamePage = () => {
                         gameColor={themeColor[300] || theme.palette.grey[200]}
                         onClick={() => changeSelectedSticker(sticker)}
                       >
-                        <Avatar
+                        <img
                           src={sticker.image}
                           style={{ width: 64, height: 64 }}
+                          alt={sticker}
                         />
                         <Typography align="center">{sticker.name}</Typography>
                       </StickerOption>
