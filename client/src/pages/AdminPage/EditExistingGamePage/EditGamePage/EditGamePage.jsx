@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
-import { AuthState } from "../../../context/AuthProvider";
-import { Notify } from "../../../utils";
+import { AuthState } from "../../../../context/AuthProvider";
+import { Notify } from "../../../../utils";
 import {
   Avatar,
   Box,
@@ -25,8 +25,9 @@ import dayjs from "dayjs";
 import { Add, ArrowBack, Close } from "@mui/icons-material";
 import StickerModal from "components/StickerModal/StickerModal";
 
-const CreateNewGamePage = () => {
+const EditGamePage = () => {
   const [authorized, setAuthorized] = useState(false);
+  const [gameId, setGameId] = useState("");
   const [gameName, setGameName] = useState("");
   const [gameDescription, setGameDescription] = useState("");
   const [imageUrl, setImageUrl] = useState("");
@@ -36,6 +37,8 @@ const CreateNewGamePage = () => {
   const [sequential, setSequential] = useState(false);
   const [addStickerModalOpen, setAddStickerModalOpen] = useState(false);
   const [test, setTest] = useState(false)
+
+  const [stickerData, setStickerData] = useState([]);
 
   const onGameNameChange = (e) => {
     setGameName(e.target.value);
@@ -85,19 +88,73 @@ const CreateNewGamePage = () => {
   const theme = useTheme();
   const navigate = useNavigate();
   const { auth } = AuthState();
+  const route = useParams();
   const breakpointSmUp = useMediaQuery(theme.breakpoints.up("sm"));
 
-  const checkIfAuthorized = () => {
+  const fetchGameData = async () => {
+
     if (auth.admin) {
-      setAuthorized(true);
-    } else {
-      return Notify("You are not authorized the access this page", "error");
+        setAuthorized(true);
+      } else {
+        return Notify("You are not authorized the access this page", "error");
+      }
+
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/api/game/${route.id}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${auth.token}`,
+          },
+        }
+      );
+      const data = await response.json();
+      setGameId(data._id)
+      setGameName(data.name)
+      setGameDescription(data.description)
+      setImageUrl(data.image)
+      setStartDate(dayjs(data.startDate))
+      setEndDate(dayjs(data.endDate))
+      setSequential(data.sequential)
+      setTest(data.test)
+      const stickers = [];
+      for (const sticker of data.stickers) {
+        try {
+          const response = await fetch(
+            `${process.env.REACT_APP_API_URL}/api/sticker/${sticker}`,
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${auth.token}`,
+              },
+            }
+          );
+          const data = await response.json();
+          stickers.push(data);
+        } catch (error) {
+          return Notify("Internal server error", "error");
+        }
+      }
+      setStickers(stickers.map(sticker => ({
+        name: sticker.name,
+        id: sticker._id,
+        image: sticker.image,
+      })))
+    } catch (error) {
+      return Notify("Internal server error", "error");
     }
   };
 
   useEffect(() => {
-    checkIfAuthorized();
-    // eslint-disable-next-line
+    if (auth) {
+      fetchGameData();
+    } else {
+      navigate("/");
+      Notify("You are must log in to access this page", "error");
+    }
   }, []);
 
   const onSubmit = async (e) => {
@@ -109,7 +166,7 @@ const CreateNewGamePage = () => {
     }
 
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/game/add`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/game/update/${gameId}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -122,14 +179,12 @@ const CreateNewGamePage = () => {
           startDate: startDate.toISOString(),
           endDate: endDate.toISOString(),
           sequential,
-          test,
           stickers: stickers.map((sticker) => sticker.id),
+          test,
         }),
       });
       const data = await response.json();
-      const gameId = data.id;
       if (data.success) {
-        Notify("Game created", "success");
         try {
           for (const sticker of stickers) {
             // @ts-ignore
@@ -144,12 +199,11 @@ const CreateNewGamePage = () => {
               }),
             });
             const data = await response.json();
-            if (data.success) {
-              return Notify("Sticker updated", "success");
-            } else {
+            if (!data.success) {
               return Notify(data.error, "warn");
             }
           }
+          return Notify("Game updated", "success");
         } catch {}
       } else {
         return Notify(data.error, "warn");
@@ -157,6 +211,7 @@ const CreateNewGamePage = () => {
     } catch (error) {
       return Notify("Internal server error", "error");
     }
+    
   };
 
   return (
@@ -173,9 +228,9 @@ const CreateNewGamePage = () => {
           <Button
             variant="contained"
             style={{ marginBottom: 32 }}
-            onClick={() => navigate("/admin")}
+            onClick={() => navigate("/admin/editexistinggame/")}
           >
-            <ArrowBack /> Return to Admin Page
+            <ArrowBack /> Return to Game List
           </Button>
           <Typography variant="h3">Create a New Game</Typography>
 
@@ -219,6 +274,7 @@ const CreateNewGamePage = () => {
                   label="End Date & Time"
                   onChange={(newValue) => onEndDateChange(newValue)}
                   defaultValue={dayjs().add(7, "hours")}
+                  value={endDate}
                 />
               </Box>
             </LocalizationProvider>
@@ -226,7 +282,7 @@ const CreateNewGamePage = () => {
             <Box mb={2}>
               <FormControlLabel
                 control={
-                  <Checkbox value={sequential} onChange={onSequentialChange} />
+                  <Checkbox checked={sequential} onChange={onSequentialChange} />
                 }
                 label="Sequential"
                 labelPlacement="start"
@@ -236,7 +292,7 @@ const CreateNewGamePage = () => {
             <Box mb={2}>
               <FormControlLabel
                 control={
-                  <Checkbox value={test} onChange={onTestChange} />
+                  <Checkbox checked={test} onChange={onTestChange} />
                 }
                 label="Test Game?"
                 labelPlacement="start"
@@ -300,7 +356,7 @@ const CreateNewGamePage = () => {
               type="submit"
               onClick={onSubmit}
             >
-              Create Game
+              Update Game
             </Button>
           </FormGroup>
           {addStickerModalOpen ? (
@@ -319,4 +375,4 @@ const CreateNewGamePage = () => {
   );
 };
 
-export default CreateNewGamePage;
+export default EditGamePage;

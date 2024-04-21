@@ -80,7 +80,10 @@ const updateStickerById = (req, res) => {
       sticker
         .save()
         .then(() => {
-            return res.json("Sticker updated!")
+            return res.status(200).json({
+                success: true,
+                message: "Sticker updated!"
+            })
         })
         .catch((err) => {
             return res.status(400).json("Error: " + err)

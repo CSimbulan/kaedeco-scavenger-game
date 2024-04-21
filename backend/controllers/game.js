@@ -40,24 +40,26 @@ const createGame = (req, res) => {
 const updateGameById = (req, res) => {
   Game.findByIdAndUpdate(req.params.id)
     .then((game) => {
-      gameFields.name = req.body.name || game.name;
-      gameFields.image = req.body.image || game.image;
-      gameFields.sequential = req.body.sequential;
-      gameFields.startDate = req.body.startDate;
-      gameFields.endDate = req.body.endDate;
-      gameFields.stickers = req.body.stickers;
-      gameFields.test = req.body.test;
+      game.name = req.body.name || game.name;
+      game.image = req.body.image || game.image;
+      game.sequential = req.body.sequential;
+      game.startDate = req.body.startDate;
+      game.endDate = req.body.endDate;
+      game.stickers = req.body.stickers;
+      game.test = req.body.test;
       if (req.body.description) {
-        gameFields.description = req.body.description;
+        game.description = req.body.description;
       }
-
       if (req.body.participants) {
         game.participants = req.body.participants;
       }
 
       game
         .save()
-        .then(() => res.json("Game updated!"))
+        .then(() => res.status(200).json({
+            success:true,
+            message: 'Game updated!'
+        }))
         .catch((err) => res.status(400).json("Error: " + err));
     })
     .catch((err) => res.status(400).json("Error: " + err));
@@ -86,6 +88,9 @@ const sendGame = (game, statusCode, res) => {
     startDate: game.startDate,
     endDate: game.endDate,
     stickers: game.stickers,
+    sequential: game.sequential,
+    test: game.test,
+    participants: game.participants
   });
 };
 

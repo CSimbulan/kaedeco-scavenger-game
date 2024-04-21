@@ -20,6 +20,8 @@ import AdminPage from "pages/AdminPage/AdminPage";
 import CreateNewGamePage from "pages/AdminPage/CreateNewGamePage/CreateNewGamePage";
 import GamePage from "pages/GamesPage/GamePage/GamePage";
 import RedeemPage from "pages/RedeemPage/RedeemPage";
+import EditExistingGamePage from "pages/AdminPage/EditExistingGamePage/EditExistingGamePage";
+import EditGamePage from "pages/AdminPage/EditExistingGamePage/EditGamePage/EditGamePage";
 
 const App = () => {
   return (
@@ -43,6 +45,8 @@ const App = () => {
         <Route path="/games" element={<GamesHomePage />} />
         <Route path="/admin" element={<AdminPage />} />
         <Route path="/admin/createnewgame" element={<CreateNewGamePage />} />
+        <Route path="/admin/editexistinggame" element={<EditExistingGamePage />} />
+        <Route path="/admin/editgame/:id" element={<EditGamePage />} />
         <Route path="/game/:id" element={<GamePage />} />
         <Route path="/redeem/:id" element={<RedeemPage />} />
 

@@ -30,6 +30,10 @@ const AdminPage = () => {
     navigate("/admin/createnewgame")
   }
 
+  const onEditExistingGameButtonClick = () => {
+    navigate("/admin/editexistinggame")
+  }
+
   return <>
   {authorized ? <Box width="100vw" display="flex" alignItems="center" justifyContent="center" pt={8} flexDirection="column">
     <Typography variant="h2">
@@ -38,7 +42,7 @@ const AdminPage = () => {
     <Button variant="contained" style={{margin: 32}} onClick={onCreateNewGameButtonClick}>
       Create New Game
     </Button>
-    <Button variant="contained" style={{margin: 32}}>
+    <Button variant="contained" style={{margin: 32}} onClick={onEditExistingGameButtonClick}>
       Edit Existing Game
     </Button>
     <Button variant="contained" style={{margin: 32}}>

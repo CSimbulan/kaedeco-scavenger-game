@@ -32,7 +32,7 @@ const TabButton = styled(Button)(({ theme }) => ({
 const StickerOption = styled(Box, {
   // @ts-ignore
   shouldForwardProp: (prop) => prop !== "selected",
-// @ts-ignore
+  // @ts-ignore
 })(({ theme, selected }) => ({
   padding: 2,
   display: "flex",
@@ -55,6 +55,7 @@ const StickerModal = ({ open, onClose, onSelectSticker, selectedStickers }) => {
   const [selectedSticker, setSelectedSticker] = useState({});
   const [stickerName, setStickerName] = useState("");
   const [description, setDescription] = useState("");
+  const [hint, setHint] = useState("");
   //const [hints, setHints] = useState([])
   const [imageUrl, setImageUrl] = useState("");
   const [artistName, setArtistName] = useState("");
@@ -72,6 +73,10 @@ const StickerModal = ({ open, onClose, onSelectSticker, selectedStickers }) => {
 
   const onDescriptionChange = (e) => {
     setDescription(e.target.value);
+  };
+
+  const onHintChange = (e) => {
+    setHint(e.target.value);
   };
 
   const onImageUrlChange = (e) => {
@@ -122,6 +127,7 @@ const StickerModal = ({ open, onClose, onSelectSticker, selectedStickers }) => {
           body: JSON.stringify({
             name: stickerName,
             description: description,
+            hints: [hint],
             image: imageUrl,
             artist: {
               name: artistName,
@@ -217,20 +223,26 @@ const StickerModal = ({ open, onClose, onSelectSticker, selectedStickers }) => {
           {useExistingSticker ? (
             <Box minHeight={300} border="1px solid gray" borderRadius={2} p={2}>
               <Grid container>
-                {stickerData.map((sticker, 
-// @ts-ignore
-                index) => (
-                  <Grid item xs={4} key={sticker.id}>
-                    <StickerOption
-                      // @ts-ignore
-                      selected={sticker._id === selectedSticker.id}
-                      onClick={() => changeSelectedSticker(sticker)}
-                    >
-                      <Avatar sizes="sm" src={sticker.image} />
-                      <Typography textAlign="center">{sticker.name}</Typography>
-                    </StickerOption>
-                  </Grid>
-                ))}
+                {stickerData.map(
+                  (
+                    sticker,
+                    // @ts-ignore
+                    index
+                  ) => (
+                    <Grid item xs={4} key={sticker.id}>
+                      <StickerOption
+                        // @ts-ignore
+                        selected={sticker._id === selectedSticker.id}
+                        onClick={() => changeSelectedSticker(sticker)}
+                      >
+                        <Avatar sizes="sm" src={sticker.image} />
+                        <Typography textAlign="center">
+                          {sticker.name}
+                        </Typography>
+                      </StickerOption>
+                    </Grid>
+                  )
+                )}
               </Grid>
             </Box>
           ) : (
@@ -251,6 +263,23 @@ const StickerModal = ({ open, onClose, onSelectSticker, selectedStickers }) => {
                   value={description}
                   onChange={onDescriptionChange}
                 />
+                <TextField
+                  variant="outlined"
+                  label="Hint"
+                  style={{ marginBottom: 16 }}
+                  value={hint}
+                  onChange={onHintChange}
+                />
+                {/*TODO: Make this use a debounce function*/}
+                {imageUrl && (
+                  <Box width="100%" display="flex" justifyContent={"center"}>
+                    <img
+                      src={imageUrl}
+                      alt="sticker preview"
+                      style={{ width: 70, height: 70, marginBottom: 16 }}
+                    />
+                  </Box>
+                )}
                 <TextField
                   required
                   variant="outlined"
@@ -319,7 +348,7 @@ const StickerModal = ({ open, onClose, onSelectSticker, selectedStickers }) => {
         <Button onClick={onClose}>Cancel</Button>
         <Button
           // @ts-ignore
-          disabled={!selectedSticker.id}
+          disabled={!selectedSticker.id && useExistingSticker}
           type={useExistingSticker ? "button" : "submit"}
           onClick={
             useExistingSticker
