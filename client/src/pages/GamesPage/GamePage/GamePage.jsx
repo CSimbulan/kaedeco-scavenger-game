@@ -58,16 +58,18 @@ const StickerViewButton = styled(Button, {
   zIndex: 3,
   width: "50%",
   height: 40,
-  borderColor: gameColor ? gameColor[300] : theme.palette.info.main,
+  borderColor: gameColor[100] ? gameColor[300] : theme.palette.info.main,
   color: "black",
-  "&:hover": {
-    cursor: "pointer",
-    backgroundColor: gameColor ? gameColor[300] : theme.palette.grey[200],
-    borderColor: gameColor ? gameColor[500] : theme.palette.info.dark,
+  "@media (pointer:fine)": {
+    "&:hover": {
+      cursor: "pointer",
+      backgroundColor: gameColor[100] ? gameColor[300] : theme.palette.grey[200],
+      borderColor: gameColor[100] ? gameColor[500] : theme.palette.info.dark,
+    },
   },
   "&:disabled": {
-    backgroundColor: gameColor ? gameColor[300] : theme.palette.grey[200],
-    borderColor: gameColor ? gameColor[500] : theme.palette.info.dark,
+    backgroundColor: gameColor[100] ? gameColor[300] : theme.palette.info.main,
+    borderColor: gameColor[100] ? gameColor[500] : theme.palette.info.dark,
     color: "black",
   },
 }));
@@ -78,12 +80,11 @@ const StickerContainer = styled(Box, {
   // @ts-ignore
 })(({ theme, gameColor }) => ({
   minHeight: 300,
-  border: `1px solid ${gameColor ? gameColor[500] : "gray"}`,
-  borderRadius: 2,
+  border: `1px solid ${gameColor[100] ? gameColor[500] : "gray"}`,
   width: 400,
   margin: 16,
   boxShadow: `10px 10px ${
-    gameColor ? gameColor[300] : theme.palette.grey[200]
+    gameColor[100] ? gameColor[300] : theme.palette.grey[500]
   }`,
 }));
 
@@ -92,14 +93,14 @@ const HintBox = styled(Box, {
   shouldForwardProp: (prop) => prop !== "gameColor",
   // @ts-ignore
 })(({ theme, gameColor }) => ({
-  border: `1px solid ${gameColor ? gameColor[500] : "gray"}`,
-  backgroundColor: gameColor ? gameColor[200] : "gray",
+  border: `1px solid ${gameColor[100] ? gameColor[500] : theme.palette.grey[300]}`,
+  backgroundColor: gameColor[100] ? gameColor[200] : theme.palette.grey[300],
   borderRadius: 2,
   width: "80%",
   padding: 16,
   margin: 16,
   boxShadow: `10px 10px ${
-    gameColor ? gameColor[300] : theme.palette.grey[200]
+    gameColor[100] ? gameColor[300] : theme.palette.grey[500]
   }`,
 }));
 
@@ -160,7 +161,7 @@ const GamePage = () => {
       );
       const data = await response.json();
       setGameData(data);
-      if (data.assets.background.color) {
+      if (data?.assets?.background.color) {
         setThemeColor(themeColorMap[data.assets.background.color]);
       }
       const stickers = [];
@@ -213,7 +214,7 @@ const GamePage = () => {
           zIndex={2}
         >
           {/*Assets for scavenger hunt theme*/}
-          {gameData.assets.assets &&
+          {gameData?.assets?.assets &&
             gameData.assets.assets.map((asset, index) => (
               <Box
                 key={index}
@@ -332,19 +333,18 @@ const GamePage = () => {
             >
               <Box width="100%" display="flex" justifyContent="center" alignItems="center" flexDirection="column" py={2}> 
               {stickerData.map((sticker, index) => (
-                <>
                   <HintBox
                     // @ts-ignore
                     gameColor={themeColor}
+                    key={index}
                   >
                     <Typography variant="h5" align="center">
                       Hint #{index + 1}
                     </Typography>
                     <Typography>
-                      {sticker.hints[0]}
+                      {sticker.hints[0] || ''}
                     </Typography>
                   </HintBox>
-                </>
               ))}
               </Box>
             </StickerContainer>
