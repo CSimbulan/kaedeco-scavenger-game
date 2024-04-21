@@ -237,8 +237,8 @@ const GamePage = () => {
                     bottom: "0%",
                     alignItems: "end",
                   }),
-                  width: smallerScreens ? 300 : largerScreens ? 700 : 500,
-                  height: smallerScreens ? 300 : largerScreens ? 700 : 500,
+                  width: smallerScreens ? 300 : largerScreens ? 300 : 300,
+                  height: smallerScreens ? 300 : largerScreens ? 300 : 300,
                   zIndex: -1,
                 }}
               >
