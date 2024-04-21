@@ -237,12 +237,12 @@ const GamePage = () => {
                     bottom: "0%",
                     alignItems: "end",
                   }),
-                  width: smallerScreens ? 300 : largerScreens ? 300 : 300,
-                  height: smallerScreens ? 300 : largerScreens ? 300 : 300,
+                  width: smallerScreens ? 300 : largerScreens ? 700 : 500,
+                  height: smallerScreens ? 300 : largerScreens ? 700 : 500,
                   zIndex: -1,
                 }}
               >
-                <img src={asset.image} alt={`asset ${index}`} />
+                <img src={asset.image} alt={`asset ${index}`} width="100%" height="100%"/>
               </Box>
             ))}
           {/*Scavenger hunt information*/}
