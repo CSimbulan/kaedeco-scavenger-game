@@ -100,10 +100,50 @@ const forgotPassword = async (req, res, next) => {
 
     // Reset password email template in HTML
     const html = `
-      <h1>You have requested a password reset</h1>
-      <p>Please go to this link to reset your password:</p>
-      <a href=${resetUrl} clicktracking=off>${resetUrl}</a>
-    `;
+    <div style="background-color: 'white'; padding:10px 10px 10px 10px;">
+        <div 
+          style="font-size:6px; line-height:10px; padding:16px 16px 16px 16px;"
+          valign="top"
+          align="center"
+        >
+          <img
+            class="max-width"
+            border="0"
+            style="display:block; color:#000000; text-decoration:none; font-family:Helvetica, arial, sans-serif; font-size:16px; max-width:20% !important; width:20%; height:auto !important;"
+            width="240"
+            alt="kaedeco logo"
+            data-proportionally-constrained="true"
+            data-responsive="true"
+            src="${process.env.EMAIL_LOGO_URL}"
+          >
+        </div>
+      </div>
+      <div style="background-color: #F7E6E6; padding:10px 10px 10px 10px;">
+        <div style="font-family: inherit; text-align: center"><h2>Password Reset Request</h2></div>
+        <hr>
+        <div style="font-family: inherit; text-align: inherit; padding-top:10px;">Hi, ${user.name}</div>
+        <div style="font-family: inherit; text-align: inherit"><br></div>
+        <div 
+          style="font-family: inherit; text-align: inherit">
+          You have requested a password reset.
+        </div>
+        <div class="v-text-align" align="inherit" style="padding-top:10px;">
+          <a href="${resetUrl}" target="_blank" class="v-button v-size-width v-font-size" style="box-sizing: border-box;display: inline-block;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #FFFFFF; background-color: #d32f2f; border-radius: 4px;-webkit-border-radius: 4px; -moz-border-radius: 4px; width:auto; max-width:100%; overflow-wrap: break-word; word-break: break-word; word-wrap:break-word; mso-border-alt: none;font-size: 14px;">
+            <span style="display:block;padding:10px 20px;line-height:120%;"><span style="line-height: 16.8px;">Click Here to Reset Your Password</span></span>
+          </a>
+        </div>
+        <div 
+          style="font-family: inherit; text-align: inherit">
+          <p>Or you can use this link:</p>
+          <a href=${resetUrl} clicktracking=off>${resetUrl}</a>
+        </div>
+      </div>
+      <div style="background-color: #e0e0e0; padding:10px 10px 10px 10px;">
+        <div style="font-family: inherit; text-align: inherit">
+          If you did not make this request, you can ignore this message.
+        </div>
+      </div>
+      `;
 
     try {
       await sendEmail({
@@ -168,7 +208,6 @@ const resetPassword = async (req, res, next) => {
 };
 
 const sendAuth = (user, statusCode, res) => {
-  
   return res.status(statusCode).json({
     id: user._id,
     success: true,

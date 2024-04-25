@@ -91,7 +91,7 @@ const LoginPage = () => {
       
       <hr />
 
-      {/* <Form.Group className="mb-3 mt-1 text-center" controlId="register">
+      <Form.Group className="mb-3 mt-1 text-center" controlId="register">
         <Link
           to="/forgotPassword"
           // @ts-ignore
@@ -100,7 +100,7 @@ const LoginPage = () => {
         >
           Forgot password?
         </Link>
-      </Form.Group> */}
+      </Form.Group>
 
       <Button
         variant="success"
