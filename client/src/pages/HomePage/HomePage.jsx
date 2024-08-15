@@ -23,6 +23,7 @@ const HomePage = () => {
 
       if (data) {
         // TODO: Non admins will see something different
+        console.log(data)
         setGamesData(data);
       } else {
         return Notify("Error retrieving game data.", "error");

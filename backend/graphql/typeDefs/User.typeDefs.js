@@ -1,4 +1,4 @@
-const userTypeDef = `#graphql
+const userTypeDefs = `#graphql
   type User {
     _id: ID!
     email: String!
@@ -8,6 +8,7 @@ const userTypeDef = `#graphql
     admin: Boolean
     resetPasswordToken: String
     resetPasswordExpire: String
+    games: [Game]
   }
 
   type Query {
@@ -32,4 +33,4 @@ const userTypeDef = `#graphql
   }
 `;
 
-module.exports = userTypeDef;
+module.exports = userTypeDefs;

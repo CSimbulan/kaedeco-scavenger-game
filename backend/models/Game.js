@@ -2,11 +2,14 @@ const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
-const GameSchema = new mongoose.Schema(
+const GameSchema = new Schema(
   {
     name: { type: String, required: [true, "Please provide a name"] },
     description: String,
-    participants: { type: Array, default: [] },
+    participants: { type: [{
+      type: String,
+      ref: "User"
+    }], default: [] },
     image: {
       type: String,
       default:
@@ -15,7 +18,10 @@ const GameSchema = new mongoose.Schema(
     startDate: Date,
     endDate: Date,
     sequential: Boolean, // If the scavenger hunt needs to find items in a specific order,
-    stickers: Array,
+    stickers: [{
+      type: Schema.Types.ObjectId,
+      ref: "Sticker"
+    }],
     test: {type: Boolean, default: false},
     assets: Schema.Types.Mixed,
   },
