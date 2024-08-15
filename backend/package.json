@@ -4,8 +4,8 @@
   "description": "scavenger hunt game for Kaede Co events",
   "main": "server.js",
   "scripts": {
-    "start": "node ./api/server.js",
-    "server": "nodemon server.js"
+    "start": "node ./api/index.js",
+    "server": "nodemon ./api/index.js"
   },
   "repository": {
     "type": "git",
