@@ -159,9 +159,7 @@ const forgotPassword = async (req, res, next) => {
     } catch (error) {
       user.resetPasswordToken = undefined;
       user.resetPasswordExpire = undefined;
-
       await user.save();
-
       return next(new ErrorResponse("Email could not be sent", 500));
     }
   } catch (error) {
