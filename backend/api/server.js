@@ -1,44 +1,75 @@
 const express = require("express");
 const path = require("path");
 const dotenv = require("dotenv");
-const cors = require('cors')
+const cors = require("cors");
+const http = require("http");
 dotenv.config({ path: "./.env" });
+const ApolloServer = require("@apollo/server");
+const expressMiddleware = require("@apollo/server/express4");
+const ApolloServerPluginDrainHttpServer = require("@apollo/server/plugin/drainHttpServer");
 
 const connectDB = require("../config/db");
+const mergedTypeDefs = require("../graphql/typeDefs/index");
+const mergedResolvers = require("../graphql/resolvers/index");
 const errorHandler = require("../middleware/error");
 
-const app = express();
-app.use(cors());
-app.use(express.json());
-connectDB(); // Connect to databse
+async function initServer() {
+  const app = express();
 
-// API Routes
-app.use("/api/auth", require("../routes/auth"));
-app.use("/api/private", require("../routes/private"));
-app.use("/api/sticker", require("../routes/sticker"));
-app.use("/api/game", require("../routes/game"));;
+  const httpServer = http.createServer(app);
 
-// --------------------------DEPLOYMENT------------------------------
+  const server = new ApolloServer.ApolloServer({
+    typeDefs: mergedTypeDefs,
+    resolvers: mergedResolvers,
+    plugins: [
+      ApolloServerPluginDrainHttpServer.ApolloServerPluginDrainHttpServer({
+        httpServer,
+      }),
+    ],
+  });
 
+  await server.start();
 
-app.get("/", (req, res) => {
-  res.send("API is running");
-});
+  app.use(cors());
+  app.use(express.json());
+  connectDB(); // Connect to databse
+  app.use(
+    "/",
+    expressMiddleware.expressMiddleware(server, {
+      context: async ({ req }) => ({ token: req.headers.token }),
+    })
+  );
 
+  // API Routes
+  app.use("/api/auth", require("../routes/auth"));
+  app.use("/api/private", require("../routes/private"));
+  app.use("/api/sticker", require("../routes/sticker"));
+  app.use("/api/game", require("../routes/game"));
 
-// --------------------------DEPLOYMENT------------------------------
+  // --------------------------DEPLOYMENT------------------------------
 
-// Error Handler Middleware (Should be at the end of all middlewares)
-app.use(errorHandler);
+  app.get("/", (req, res) => {
+    res.send("API is running");
+  });
 
-const PORT = process.env.PORT || 5000;
+  // --------------------------DEPLOYMENT------------------------------
 
-const server = app.listen(PORT, () =>
-  console.log(`Server running on PORT ${PORT}`)
-);
+  // Error Handler Middleware (Should be at the end of all middlewares)
+  app.use(errorHandler);
 
-// Handling server errors with clean error messages
-process.on("unhandledRejection", (err, promise) => {
-  console.log(`Logged Error: ${err.message}`);
-  server.close(() => process.exit(1));
-});
+  const PORT = process.env.PORT || 5000;
+
+  // const server = app.listen(PORT, () =>
+  //   console.log(`Server running on PORT ${PORT}`)
+  // );
+  await new Promise((resolve) => httpServer.listen({ port: PORT }, resolve));
+  console.log(`🚀 Server ready at http://localhost:${PORT}/`);
+
+  // Handling server errors with clean error messages
+  process.on("unhandledRejection", (err, promise) => {
+    console.log(`Logged Error: ${err.message}`);
+    server.close(() => process.exit(1));
+  });
+}
+
+initServer();
