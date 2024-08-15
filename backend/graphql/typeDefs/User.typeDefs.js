@@ -16,8 +16,20 @@ const userTypeDefs = `#graphql
     user(userId:ID!): User
   }
 
+  type FrontEndAuth {
+      id: String
+			success: Boolean,
+			name: String,
+			email: String,
+			admin: Boolean,
+			profilePic: String,
+			token: String,
+			expires_at: String,
+  }
+
   type Mutation {
     signUp(input: SignUpInput!): User
+    logIn(input: LoginInput!): FrontEndAuth
   }
 
   input SignUpInput {
@@ -28,7 +40,7 @@ const userTypeDefs = `#graphql
   }
 
   input LoginInput {
-    username: String!
+    email: String!
     password: String!
   }
 `;
