@@ -18,14 +18,14 @@ const sendEmail = async ({ to, subject, html }) => {
   sendSmtpEmail.to = [{ email: to }];
   sendSmtpEmail.replyTo = { email: `${process.env.EMAIL_FROM}`, name: "KaedeCo" };
 
-  apiInstance.sendTransacEmail(sendSmtpEmail).then(
+  await apiInstance.sendTransacEmail(sendSmtpEmail).then(
     function (data) {
       console.log(
         "API called successfully. Returned data: " + JSON.stringify(data)
       );
     },
     function (error) {
-      console.error(error);
+      console.error('Error sending email: ' + error);
     }
   );
 
