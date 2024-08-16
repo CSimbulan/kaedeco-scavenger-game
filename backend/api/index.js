@@ -34,10 +34,7 @@ async function initServer() {
   connectDB(); // Connect to databse
   app.use(
     "/",
-    cors({
-      origin: `${process.env.APP_BASE_URL}` || 'http://localhost:3000',
-      credentials: true,
-    }),
+    cors(),
     expressMiddleware.expressMiddleware(server, {
       context: async ({ req }) => ({ token: req.headers.token }),
     })
