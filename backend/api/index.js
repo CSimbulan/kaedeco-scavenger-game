@@ -17,29 +17,27 @@ const allowedCors = [
   `${process.env.APP_BASE_URL}`,
 ];
 
-const allowCors = (req, res, next) => {
-  const { origin } = req.headers;
-
-  if (allowedCors.includes(origin)) {
-    res.header('Access-Control-Allow-Origin', origin);
-    res.header('Access-Control-Allow-Credentials', 'true');
-    const { method } = req;
-
-    const DEFAULT_ALLOWED_METHODS = 'GET,HEAD,PUT,PATCH,POST,DELETE';
-
-    const requestHeaders = req.headers['access-control-request-headers'];
-
-    if (method === 'OPTIONS') {
-      res.header('Access-Control-Allow-Methods', DEFAULT_ALLOWED_METHODS);
-      res.header('Access-Control-Allow-Headers', requestHeaders);
-      return res.end();
-    }
+const allowCors = async (req, res, next) => {
+  console.log(req.headers)
+  res.setHeader('Access-Control-Allow-Credentials', true)
+  res.setHeader('Access-Control-Allow-Origin', '*')
+  // another common pattern
+  // res.setHeader('Access-Control-Allow-Origin', req.headers.origin);
+  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT')
+  res.setHeader(
+    'Access-Control-Allow-Headers',
+    'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
+  )
+  if (req.method === 'OPTIONS') {
+    res.status(200).end()
+    return
   }
-  return next();
-};
+  return next()
+}
 
 async function initServer() {
   const app = express();
+  console.log('37483928748932742937493278')
   app.use(allowCors)
   const httpServer = http.createServer(app);
 
