@@ -1,4 +1,18 @@
 {
     "version": 2,
-    "rewrites": [{ "source": "/(.*)", "destination": "/api" }]
+    "rewrites": [{ "source": "/(.*)", "destination": "/api" }],
+    "headers": [
+        {
+          "source": "/(.*)",
+          "headers": [
+            { "key": "Access-Control-Allow-Origin", "value": "*" }
+          ]
+        },
+        {
+          "source": "http://stage.kaedeco.quest/(.*)",
+          "headers": [
+            { "key": "Access-Control-Allow-Origin", "value": "*" }
+          ]
+        }  
+    ]
 }
