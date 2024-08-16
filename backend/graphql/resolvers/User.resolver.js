@@ -68,6 +68,7 @@ const userResolver = {
       }
     },
     logIn: async (_, { input }) => {
+      console.log('aaaaaaaaaaaaaaa')
       try {
         const { email, password } = input;
         if (!email || !password) {
