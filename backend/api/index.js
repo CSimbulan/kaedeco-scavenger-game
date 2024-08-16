@@ -42,7 +42,7 @@ async function initServer() {
   app.use(
     "/",
     cors({
-      origin: "http://localhost:3000",
+      origin: `${process.env.APP_BASE_URL}` || 'http://localhost:3000',
       credentials: true,
     }),
     expressMiddleware.expressMiddleware(server, {
