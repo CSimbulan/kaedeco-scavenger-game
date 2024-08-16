@@ -28,15 +28,15 @@ const userTypeDefs = `#graphql
   }
 
   type Mutation {
-    signUp(input: SignUpInput!): User
+    register(input: RegisterInput!): FrontEndAuth
     logIn(input: LoginInput!): FrontEndAuth
   }
 
-  input SignUpInput {
-    username: String!
+  input RegisterInput {
+    email: String!
     name: String!
     password: String!
-    gender: String!
+    profilePic: String
   }
 
   input LoginInput {

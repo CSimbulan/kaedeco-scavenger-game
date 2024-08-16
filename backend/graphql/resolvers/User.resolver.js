@@ -20,6 +20,53 @@ const userResolver = {
     },
   },
   Mutation: {
+    register: async (_, {input}) => {
+      try {
+        const { name, email, password, profilePic } = input;
+        // Check if any of them is undefined
+        if (!name || !email || !password) {
+          return new ErrorResponse("Please provide name, email and password", 400);
+        }
+    
+        // Check if user already exists in our DB
+        const userExists = await User.findOne({ email }).exec();
+    
+        if (userExists) {
+          return new ErrorResponse("User already exists", 400);
+        }
+    
+        // Register and store the new user
+        const user = await User.create(
+          // If there is no picture present, remove 'profilePic'
+          profilePic === undefined || profilePic.length === 0
+            ? {
+                name,
+                email,
+                password,
+              }
+            : {
+                name,
+                email,
+                password,
+                profilePic,
+              }
+        );
+    
+        return {
+          id: user._id,
+          success: true,
+          name: user.name,
+          email: user.email,
+          admin: user.admin,
+          profilePic: user.profilePic,
+          token: user.getSignedToken(),
+          expires_at: new Date(Date.now() + process.env.JWT_EXPIRE * 60 * 60 * 1000),
+          };
+      } catch (error) {
+        console.log(error)
+        return new ErrorResponse("Internal server error", 400);
+      }
+    },
     logIn: async (_, { input }) => {
       try {
         const { email, password } = input;
@@ -50,7 +97,6 @@ const userResolver = {
 			expires_at: new Date(Date.now() + process.env.JWT_EXPIRE * 60 * 60 * 1000),
 		  };
       } catch (err) {
-        console.error("Error in login:", err);
         return new ErrorResponse("Internal server error", 400);
       }
     },
