@@ -1,9 +1,11 @@
-const gqlTools = require("@graphql-tools/merge");
+import { mergeResolvers } from "@graphql-tools/merge";
 
-const userResolver = require('./User.resolver')
-const gameResolver = require('./Game.resolver')
-const stickerResolver = require('./Sticker.resolver')
+import { userResolver } from "./User.resolver.js";
+import { gameResolver } from "./Game.resolver.js";
+import { stickerResolver } from "./Sticker.resolver.js";
 
-const mergedResolvers = gqlTools.mergeResolvers([userResolver, gameResolver, stickerResolver]);
-
-module.exports = mergedResolvers;
+export const mergedResolvers = mergeResolvers([
+  userResolver,
+  gameResolver,
+  stickerResolver,
+]);

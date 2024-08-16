@@ -1,9 +1,12 @@
-const gqlTools = require("@graphql-tools/merge");
 
-const userTypeDefs = require('./User.typeDefs')
-const gameTypeDefs = require('./Game.typeDefs')
-const stickerTypeDefs = require('./Sticker.typeDefs')
+import { mergeTypeDefs } from '@graphql-tools/merge'
 
-const mergedTypeDefs = gqlTools.mergeTypeDefs([userTypeDefs, gameTypeDefs, stickerTypeDefs]);
+import {userTypeDefs} from "./User.typeDefs.js";
+import {gameTypeDefs} from "./Game.typeDefs.js";
+import {stickerTypeDefs} from "./Sticker.typeDefs.js";
 
-module.exports = mergedTypeDefs;
+export const mergedTypeDefs = mergeTypeDefs([
+  userTypeDefs,
+  gameTypeDefs,
+  stickerTypeDefs,
+]);

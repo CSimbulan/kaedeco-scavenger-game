@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const Schema = mongoose.Schema;
 
@@ -35,5 +35,4 @@ const StickerSchema = new Schema(
   { timestamps: true }
 );
 
-const Sticker = mongoose.model("Sticker", StickerSchema);
-module.exports = Sticker;
+export const Sticker = mongoose.model("Sticker", StickerSchema);

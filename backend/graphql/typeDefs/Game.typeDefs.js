@@ -1,4 +1,4 @@
-const gameTypeDefs = `#graphql
+export const gameTypeDefs = `#graphql
   type Game {
     _id: ID!
     name: String!
@@ -13,5 +13,3 @@ const gameTypeDefs = `#graphql
     game(gameId: ID!): Game
   }
 `;
-
-module.exports = gameTypeDefs;

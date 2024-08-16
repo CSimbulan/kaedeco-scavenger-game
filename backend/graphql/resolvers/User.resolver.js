@@ -1,8 +1,8 @@
-const User = require("../../models/User");
-const Game = require("../../models/Game");
-const ErrorResponse = require("../../utils/errorResponse");
+import { User } from "../../models/User.js";
+import { Game } from "../../models/Game.js";
+import { ErrorResponse } from "../../utils/errorResponse.js";
 
-const userResolver = {
+export const userResolver = {
   Query: {
     users: async (_, _input, context) => {
       const users = await User.find();
@@ -20,21 +20,24 @@ const userResolver = {
     },
   },
   Mutation: {
-    register: async (_, {input}) => {
+    register: async (_, { input }) => {
       try {
         const { name, email, password, profilePic } = input;
         // Check if any of them is undefined
         if (!name || !email || !password) {
-          return new ErrorResponse("Please provide name, email and password", 400);
+          return new ErrorResponse(
+            "Please provide name, email and password",
+            400
+          );
         }
-    
+
         // Check if user already exists in our DB
         const userExists = await User.findOne({ email }).exec();
-    
+
         if (userExists) {
           return new ErrorResponse("User already exists", 400);
         }
-    
+
         // Register and store the new user
         const user = await User.create(
           // If there is no picture present, remove 'profilePic'
@@ -51,7 +54,7 @@ const userResolver = {
                 profilePic,
               }
         );
-    
+
         return {
           id: user._id,
           success: true,
@@ -60,15 +63,16 @@ const userResolver = {
           admin: user.admin,
           profilePic: user.profilePic,
           token: user.getSignedToken(),
-          expires_at: new Date(Date.now() + process.env.JWT_EXPIRE * 60 * 60 * 1000),
-          };
+          expires_at: new Date(
+            Date.now() + process.env.JWT_EXPIRE * 60 * 60 * 1000
+          ),
+        };
       } catch (error) {
-        console.log(error)
+        console.log(error);
         return new ErrorResponse("Internal server error", 400);
       }
     },
     logIn: async (_, { input }) => {
-      console.log('aaaaaaaaaaaaaaa')
       try {
         const { email, password } = input;
         if (!email || !password) {
@@ -88,15 +92,17 @@ const userResolver = {
           return new ErrorResponse("Invalid credentials", 401);
         }
         return {
-			id: user._id,
-			success: true,
-			name: user.name,
-			email: user.email,
-			admin: user.admin,
-			profilePic: user.profilePic,
-			token: user.getSignedToken(),
-			expires_at: new Date(Date.now() + process.env.JWT_EXPIRE * 60 * 60 * 1000).toISOString(),
-		  };
+          id: user._id,
+          success: true,
+          name: user.name,
+          email: user.email,
+          admin: user.admin,
+          profilePic: user.profilePic,
+          token: user.getSignedToken(),
+          expires_at: new Date(
+            Date.now() + process.env.JWT_EXPIRE * 60 * 60 * 1000
+          ).toISOString(),
+        };
       } catch (err) {
         return new ErrorResponse("Internal server error", 400);
       }
@@ -114,5 +120,3 @@ const userResolver = {
     },
   },
 };
-
-module.exports = userResolver;

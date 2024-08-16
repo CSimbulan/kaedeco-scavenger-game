@@ -1,4 +1,4 @@
-const stickerTypeDefs = `#graphql
+export const stickerTypeDefs = `#graphql
   type Sticker {
     _id: ID!
     name: String!
@@ -29,5 +29,3 @@ const stickerTypeDefs = `#graphql
     sticker(stickerId:ID!): Sticker
   }
 `;
-
-module.exports = stickerTypeDefs;

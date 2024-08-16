@@ -1,4 +1,4 @@
-const userTypeDefs = `#graphql
+export const userTypeDefs = `#graphql
   type User {
     _id: ID!
     email: String!
@@ -44,5 +44,3 @@ const userTypeDefs = `#graphql
     password: String!
   }
 `;
-
-module.exports = userTypeDefs;

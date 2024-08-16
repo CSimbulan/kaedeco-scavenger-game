@@ -1,98 +1,74 @@
-const express = require("express");
-const path = require("path");
-const dotenv = require("dotenv");
-const cors = require("cors");
-const http = require("http");
+import express from "express";
+import path from "path";
+import dotenv from "dotenv";
+import cors from "cors";
+import http from "http";
 dotenv.config({ path: "./.env" });
-const ApolloServer = require("@apollo/server");
-const expressMiddleware = require("@apollo/server/express4");
-const ApolloServerPluginDrainHttpServer = require("@apollo/server/plugin/drainHttpServer");
+import { ApolloServer } from "@apollo/server";
+import { expressMiddleware } from "@apollo/server/express4";
+import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHttpServer";
 
-const connectDB = require("../config/db");
-const mergedTypeDefs = require("../graphql/typeDefs/index");
-const mergedResolvers = require("../graphql/resolvers/index");
-const errorHandler = require("../middleware/error");
+import { connectDB } from "../config/db.js";
+import { mergedTypeDefs } from "../graphql/typeDefs/index.js";
+import { mergedResolvers } from "../graphql/resolvers/index.js";
+import { errorHandler } from "../middleware/error.js";
 
-const allowedCors = [
-  `${process.env.APP_BASE_URL}a`,
-];
+const app = express();
 
-const allowCors = async (req, res, next) => {
-  console.log(req.headers.origin)
-  res.setHeader('Access-Control-Allow-Credentials', true)
-  res.setHeader('Access-Control-Allow-Origin', req.headers.origin)
-  // another common pattern
-  // res.setHeader('Access-Control-Allow-Origin', req.headers.origin);
-  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT')
-  res.setHeader(
-    'Access-Control-Allow-Headers',
-    'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
-  )
-  if (req.method === 'OPTIONS') {
-    return res.status(200).end()
-  }
-  return next()
-}
+const httpServer = http.createServer(app);
 
-async function initServer() {
-  const app = express();
-  console.log('37483928748932742937493278')
-  app.use(allowCors)
-  const httpServer = http.createServer(app);
+const server = new ApolloServer({
+  typeDefs: mergedTypeDefs,
+  resolvers: mergedResolvers,
+  plugins: [
+    ApolloServerPluginDrainHttpServer({
+      httpServer,
+    }),
+  ],
+});
 
-  const server = new ApolloServer.ApolloServer({
-    typeDefs: mergedTypeDefs,
-    resolvers: mergedResolvers,
-    plugins: [
-      ApolloServerPluginDrainHttpServer.ApolloServerPluginDrainHttpServer({
-        httpServer,
-      }),
-    ],
-  });
+await server.start();
 
-  await server.start();
+app.use(express.json());
+connectDB(); // Connect to databse
+app.use(
+  "/",
+  cors({
+    origin: `${process.env.APP_BASE_URL}` || "http://localhost:3000",
+    credentials: true,
+  }),
+  expressMiddleware(server, {
+    context: async ({ req }) => ({ token: req.headers.token }),
+  })
+);
 
+// API Routes from old REST
+// app.use("/api/auth", require("../routes/auth"));
+// app.use("/api/private", require("../routes/private"));
+// app.use("/api/sticker", require("../routes/sticker"));
+// app.use("/api/game", require("../routes/game"));
 
+// --------------------------DEPLOYMENT------------------------------
 
-  app.use(express.json());
-  connectDB(); // Connect to databse
-  app.use(
-    "/",
-    expressMiddleware.expressMiddleware(server, {
-      context: async ({ req }) => ({ token: req.headers.token }),
-    })
-  );
+app.get("/", (req, res) => {
+  res.send("API is running");
+});
 
-  // API Routes
-  app.use("/api/auth", require("../routes/auth"));
-  app.use("/api/private", require("../routes/private"));
-  app.use("/api/sticker", require("../routes/sticker"));
-  app.use("/api/game", require("../routes/game"));
+// --------------------------DEPLOYMENT------------------------------
 
-  // --------------------------DEPLOYMENT------------------------------
+// Error Handler Middleware (Should be at the end of all middlewares)
+app.use(errorHandler);
 
-  app.get("/", (_req, res) => {
-    res.send("API is running");
-  });
+const PORT = process.env.PORT || 5000;
 
-  // --------------------------DEPLOYMENT------------------------------
+// const server = app.listen(PORT, () =>
+//   console.log(`Server running on PORT ${PORT}`)
+// );
+await new Promise((resolve) => httpServer.listen({ port: PORT }, resolve));
+console.log(`🚀 Server ready at http://localhost:${PORT}/`);
 
-  // Error Handler Middleware (Should be at the end of all middlewares)
-  app.use(errorHandler);
-
-  const PORT = process.env.PORT || 5000;
-
-  // const server = app.listen(PORT, () =>
-  //   console.log(`Server running on PORT ${PORT}`)
-  // );
-  await new Promise((resolve) => httpServer.listen({ port: PORT }, resolve));
-  console.log(`🚀 Server ready at http://localhost:${PORT}/`);
-
-  // Handling server errors with clean error messages
-  process.on("unhandledRejection", (err, promise) => {
-    console.log(`Logged Error: ${err.message}`);
-    server.close(() => process.exit(1));
-  });
-}
-
-initServer();
+// Handling server errors with clean error messages
+process.on("unhandledRejection", (err, promise) => {
+  console.log(`Logged Error: ${err.message}`);
+  server.close(() => process.exit(1));
+});
