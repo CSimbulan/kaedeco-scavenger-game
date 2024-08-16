@@ -14,11 +14,11 @@ const mergedResolvers = require("../graphql/resolvers/index");
 const errorHandler = require("../middleware/error");
 
 const allowedCors = [
-  `${process.env.APP_BASE_URL}`,
+  `${process.env.APP_BASE_URL}a`,
 ];
 
 const allowCors = async (req, res, next) => {
-  console.log(req.headers)
+  console.log(req.headers.origin)
   res.setHeader('Access-Control-Allow-Credentials', true)
   res.setHeader('Access-Control-Allow-Origin', req.headers.origin)
   // another common pattern
