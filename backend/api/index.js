@@ -13,7 +13,7 @@ const mergedTypeDefs = require("../graphql/typeDefs/index");
 const mergedResolvers = require("../graphql/resolvers/index");
 const errorHandler = require("../middleware/error");
 
-const allowCors = fn => async (req, res) => {
+const allowCors = () => async (req, res, next) => {
   res.setHeader('Access-Control-Allow-Credentials', true)
   res.setHeader('Access-Control-Allow-Origin', '*')
   // another common pattern
@@ -25,14 +25,9 @@ const allowCors = fn => async (req, res) => {
   )
   if (req.method === 'OPTIONS') {
     res.status(200).end()
-    return
+    next()
   }
-  return await fn(req, res)
-}
-
-const handler = (req, res) => {
-  const d = new Date()
-  res.end(d.toString())
+  next() 
 }
 
 async function initServer() {
@@ -59,7 +54,7 @@ async function initServer() {
   app.use(
     "/",
     cors(),
-    allowCors(handler),
+    allowCors(),
     expressMiddleware.expressMiddleware(server, {
       context: async ({ req }) => ({ token: req.headers.token }),
     })
