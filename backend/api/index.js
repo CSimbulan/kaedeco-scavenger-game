@@ -51,7 +51,7 @@ async function initServer() {
 
   // --------------------------DEPLOYMENT------------------------------
 
-  app.get("/", (req, res) => {
+  app.get("/", (_req, res) => {
     res.send("API is running");
   });
 
