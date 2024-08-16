@@ -30,13 +30,6 @@ async function initServer() {
 
   await server.start();
 
- // app.use(cors());
-  app.use(function(_req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Methods", "GET, PUT, POST");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
-  });
   app.use(express.json());
   connectDB(); // Connect to databse
   app.use(
