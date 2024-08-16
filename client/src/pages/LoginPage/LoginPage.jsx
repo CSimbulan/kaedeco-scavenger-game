@@ -14,8 +14,7 @@ const LoginPage = () => {
     email: "",
     password: "",
   });
-  const [isLoading, setIsLoading] = useState(false);
-  const [logIn, { loading, data, error }] = useMutation(LOGIN_MUTATION);
+  const [logIn, { loading, data, error: backendError }] = useMutation(LOGIN_MUTATION);
 
   const navigate = useNavigate();
   const { setAuth } = AuthState();
@@ -26,12 +25,9 @@ const LoginPage = () => {
 
   const loginHandler = async (e) => {
     e.preventDefault();
-    setIsLoading(true);
-
     // If any field is missing
     if (!credentials.email || !credentials.password) {
-      setIsLoading(false);
-      return Notify("Please Fill all the Feilds", "warn");
+      return Notify("Please fill all the fields", "warn");
     }
 
     try {
@@ -42,39 +38,19 @@ const LoginPage = () => {
             password: credentials.password,
           },
         },
-      }).then(() => {
-        if (data && data.logIn) {
-          localStorage.setItem("auth", JSON.stringify(data.logIn)); // Save auth details in local storage
-          setAuth(data.logIn);
-          navigate("/"); // Go to home page
-          return Notify("You are successfully logged in", "success");
+        onCompleted: (response) => {
+          if (response && response.logIn) {
+            localStorage.setItem("auth", JSON.stringify(response.logIn)); // Save auth details in local storage
+            setAuth(response.logIn);
+            navigate("/"); // Go to home page
+            return Notify("You are successfully logged in", "success");
+          }
+        },
+        onError: (res) => {
+          return Notify(res.message, "error");
         }
       })
-      // const response = await fetch(`${process.env.REACT_APP_API_URL}/api/auth/login`, {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      //   body: JSON.stringify({
-      //     email: credentials.email,
-      //     password: credentials.password,
-      //   }),
-      // });
-      // const data = await response.json();
-
-      // if (data.success) {
-      //   localStorage.setItem("auth", JSON.stringify(data)); // Save auth details in local storage
-      //   setAuth(data);
-      //   setIsLoading(false);
-      //   navigate("/"); // Go to home page
-      //   return Notify("You are successfully logged in", "success");
-      // } else {
-      //   setIsLoading(false);
-      //   return Notify(data.error, "warn");
-      // }
     } catch (error) {
-      setIsLoading(false);
-      console.log(error)
       return Notify("Internal server error", "error");
     }
   };
