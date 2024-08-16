@@ -16,15 +16,18 @@ import ProfileModal from "../ProfileModal/ProfileModal";
 import "./NavigationBar.css";
 import React from "react";
 import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
+import { useApolloClient } from "@apollo/client";
 
 const NavigationBar = () => {
   const [modalShow, setModalShow] = useState(false);
 
   const navigate = useNavigate();
   const { auth, setAuth } = AuthState();
+  const client = useApolloClient();
 
   const logoutHandler = () => {
     localStorage.removeItem("auth");
+    client.resetStore();
     setAuth(null);
     return navigate("/login");
   };
