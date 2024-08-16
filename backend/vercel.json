@@ -5,13 +5,13 @@
         {
           "source": "/(.*)",
           "headers": [
-            { "key": "Access-Control-Allow-Origin", "value": "*" }
+            { "key": "Access-Control-Allow-Origin", "value": "http://stage.kaedeco.quest" }
           ]
         },
         {
           "source": "stage.kaedeco.quest/(.*)",
           "headers": [
-            { "key": "Access-Control-Allow-Origin", "value": "*" }
+            { "key": "Access-Control-Allow-Origin", "value": "http://stage.kaedeco.quest" }
           ]
         }  
     ]
