@@ -13,9 +13,26 @@ const mergedTypeDefs = require("../graphql/typeDefs/index");
 const mergedResolvers = require("../graphql/resolvers/index");
 const errorHandler = require("../middleware/error");
 
+const allowCors = () => async (req, res, next) => {
+  res.setHeader('Access-Control-Allow-Credentials', true)
+  res.setHeader('Access-Control-Allow-Origin', '*')
+  // another common pattern
+  // res.setHeader('Access-Control-Allow-Origin', req.headers.origin);
+  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT')
+  res.setHeader(
+    'Access-Control-Allow-Headers',
+    'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
+  )
+  if (req.method === 'OPTIONS') {
+    res.status(200).end()
+    next()
+  }
+  next() 
+}
+
 async function initServer() {
   const app = express();
-
+  app.use(allowCors())
   const httpServer = http.createServer(app);
 
   const server = new ApolloServer.ApolloServer({
@@ -30,14 +47,12 @@ async function initServer() {
 
   await server.start();
 
+
+
   app.use(express.json());
   connectDB(); // Connect to databse
   app.use(
     "/",
-    cors({
-      origin: `${process.env.APP_BASE_URL}` || 'http://localhost:3000',
-      credentials: true,
-    }),
     expressMiddleware.expressMiddleware(server, {
       context: async ({ req }) => ({ token: req.headers.token }),
     })
