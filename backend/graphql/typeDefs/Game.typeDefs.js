@@ -3,12 +3,14 @@ const gameTypeDefs = `#graphql
     _id: ID!
     name: String!
     description: String
+    image: String
     participants: [String]
   }
 
   type Query {
     games: [Game]
-    game(gameId:ID!): Game
+    gamesByUser(userId: ID!): [Game]
+    game(gameId: ID!): Game
   }
 `;
 

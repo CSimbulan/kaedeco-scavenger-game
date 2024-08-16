@@ -94,7 +94,7 @@ const userResolver = {
 			admin: user.admin,
 			profilePic: user.profilePic,
 			token: user.getSignedToken(),
-			expires_at: new Date(Date.now() + process.env.JWT_EXPIRE * 60 * 60 * 1000),
+			expires_at: new Date(Date.now() + process.env.JWT_EXPIRE * 60 * 60 * 1000).toISOString(),
 		  };
       } catch (err) {
         return new ErrorResponse("Internal server error", 400);

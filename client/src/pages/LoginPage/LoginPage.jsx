@@ -6,6 +6,8 @@ import { FaUserAlt } from "react-icons/fa";
 import { AuthState } from "../../context/AuthProvider";
 import { Notify } from "../../utils";
 import React from "react";
+import { useMutation } from "@apollo/client";
+import { LOGIN_MUTATION } from "graphql/mutations/user/login";
 
 const LoginPage = () => {
   const [credentials, setCredentials] = useState({
@@ -13,6 +15,7 @@ const LoginPage = () => {
     password: "",
   });
   const [isLoading, setIsLoading] = useState(false);
+  const [logIn, { loading, data, error }] = useMutation(LOGIN_MUTATION);
 
   const navigate = useNavigate();
   const { setAuth } = AuthState();
@@ -32,30 +35,46 @@ const LoginPage = () => {
     }
 
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/auth/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      await logIn({
+        variables: {
+          input: {
+            email: credentials.email,
+            password: credentials.password,
+          },
         },
-        body: JSON.stringify({
-          email: credentials.email,
-          password: credentials.password,
-        }),
-      });
-      const data = await response.json();
+      }).then(() => {
+        if (data && data.logIn) {
+          localStorage.setItem("auth", JSON.stringify(data.logIn)); // Save auth details in local storage
+          setAuth(data.logIn);
+          navigate("/"); // Go to home page
+          return Notify("You are successfully logged in", "success");
+        }
+      })
+      // const response = await fetch(`${process.env.REACT_APP_API_URL}/api/auth/login`, {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify({
+      //     email: credentials.email,
+      //     password: credentials.password,
+      //   }),
+      // });
+      // const data = await response.json();
 
-      if (data.success) {
-        localStorage.setItem("auth", JSON.stringify(data)); // Save auth details in local storage
-        setAuth(data);
-        setIsLoading(false);
-        navigate("/"); // Go to home page
-        return Notify("You are successfully logged in", "success");
-      } else {
-        setIsLoading(false);
-        return Notify(data.error, "warn");
-      }
+      // if (data.success) {
+      //   localStorage.setItem("auth", JSON.stringify(data)); // Save auth details in local storage
+      //   setAuth(data);
+      //   setIsLoading(false);
+      //   navigate("/"); // Go to home page
+      //   return Notify("You are successfully logged in", "success");
+      // } else {
+      //   setIsLoading(false);
+      //   return Notify(data.error, "warn");
+      // }
     } catch (error) {
       setIsLoading(false);
+      console.log(error)
       return Notify("Internal server error", "error");
     }
   };
@@ -88,7 +107,7 @@ const LoginPage = () => {
           onChange={(e) => handleCredentials(e)}
         />
       </Form.Group>
-      
+
       <hr />
 
       <Form.Group className="mb-3 mt-1 text-center" controlId="register">
@@ -108,9 +127,9 @@ const LoginPage = () => {
         // @ts-ignore
         tabIndex="3"
         className="mb-3"
-        disabled={isLoading}
+        disabled={loading}
       >
-        {isLoading ? (
+        {loading ? (
           <Spinner animation="border" role="status" size="sm" />
         ) : (
           "Continue"
@@ -134,9 +153,12 @@ const LoginPage = () => {
       <Form.Group className="mb-3 text-center" controlId="register">
         <span>
           Don't have an account?&nbsp;
-          <Link to="/register" 
-// @ts-ignore
-          tabIndex="5" className="text-decoration-none">
+          <Link
+            to="/register"
+            // @ts-ignore
+            tabIndex="5"
+            className="text-decoration-none"
+          >
             Register now
           </Link>
         </span>
