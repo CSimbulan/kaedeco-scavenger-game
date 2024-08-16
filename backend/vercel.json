@@ -9,7 +9,7 @@
           ]
         },
         {
-          "source": "stage.kaedeco.quest/(.*)",
+          "source": "stageapi.kaedeco.quest/(.*)",
           "headers": [
             { "key": "Access-Control-Allow-Origin", "value": "http://stage.kaedeco.quest" }
           ]
