@@ -35,7 +35,7 @@ async function initServer() {
   app.use(
     "/",
     cors({
-      origin: `${process.env.APP_BASE_URL}` || 'http://localhost:3000',
+      origin: 'https://stage.kaedeco.quest' || 'http://localhost:3000',
       credentials: true,
     }),
     expressMiddleware.expressMiddleware(server, {
