@@ -32,7 +32,7 @@ const allowCors = () => async (req, res, next) => {
 
 async function initServer() {
   const app = express();
-  app.use(allowCors())
+  app.use(allowCors)
   const httpServer = http.createServer(app);
 
   const server = new ApolloServer.ApolloServer({
