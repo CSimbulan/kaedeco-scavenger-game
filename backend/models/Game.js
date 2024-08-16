@@ -6,6 +6,7 @@ const GameSchema = new Schema(
   {
     name: { type: String, required: [true, "Please provide a name"] },
     description: String,
+    organization: String,
     participants: { type: [{
       type: String,
       ref: "User"
@@ -17,9 +18,9 @@ const GameSchema = new Schema(
     },
     startDate: Date,
     endDate: Date,
-    sequential: Boolean, // If the scavenger hunt needs to find items in a specific order,
+    sequential: {type: Boolean, default: false}, // If the scavenger hunt needs to find items in a specific order,
     stickers: [{
-      type: Schema.Types.ObjectId,
+      type: String,
       ref: "Sticker"
     }],
     test: {type: Boolean, default: false},

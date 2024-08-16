@@ -6,6 +6,7 @@ export const userTypeDefs = `#graphql
     password: String!
     profilePic: String
     admin: Boolean
+    organizations: [String]
     resetPasswordToken: String
     resetPasswordExpire: String
     games: [Game]

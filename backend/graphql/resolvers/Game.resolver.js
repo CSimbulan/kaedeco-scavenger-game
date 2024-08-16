@@ -1,4 +1,5 @@
 import { Game } from "../../models/Game.js";
+import { ErrorResponse } from "../../utils/errorResponse.js";
 
 export const gameResolver = {
   Query: {
@@ -25,4 +26,30 @@ export const gameResolver = {
       }
     },
   },
+  Mutation: {
+	createGame: async (_, { createGameInput }) => {
+		try {
+			const {name, image, description, sequential, startDate, endDate, stickers, test, organization} = createGameInput
+			let gameFields = {};
+			gameFields.name = name;
+			gameFields.image = image;
+			gameFields.sequential = sequential;
+			gameFields.startDate = startDate;
+			gameFields.endDate = endDate;
+			gameFields.stickers = stickers;
+			gameFields.test = test;
+			gameFields.organization = organization;
+			if (description) {
+			  gameFields.description = description;
+			}
+		  
+			const newGame = await Game.create(gameFields);
+		  
+			return newGame
+		} catch (error) {
+        console.log(error);
+        return new ErrorResponse("Internal server error", 400);
+      }
+	}
+  }
 };
