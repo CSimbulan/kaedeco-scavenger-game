@@ -13,22 +13,30 @@ const mergedTypeDefs = require("../graphql/typeDefs/index");
 const mergedResolvers = require("../graphql/resolvers/index");
 const errorHandler = require("../middleware/error");
 
-const allowCors = () => async (req, res, next) => {
-  res.setHeader('Access-Control-Allow-Credentials', true)
-  res.setHeader('Access-Control-Allow-Origin', '*')
-  // another common pattern
-  // res.setHeader('Access-Control-Allow-Origin', req.headers.origin);
-  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT')
-  res.setHeader(
-    'Access-Control-Allow-Headers',
-    'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
-  )
-  if (req.method === 'OPTIONS') {
-    res.status(200).end()
-    next()
+const allowedCors = [
+  `${process.env.APP_BASE_URL}`,
+];
+
+const allowCors = (req, res, next) => {
+  const { origin } = req.headers;
+
+  if (allowedCors.includes(origin)) {
+    res.header('Access-Control-Allow-Origin', origin);
+    res.header('Access-Control-Allow-Credentials', 'true');
+    const { method } = req;
+
+    const DEFAULT_ALLOWED_METHODS = 'GET,HEAD,PUT,PATCH,POST,DELETE';
+
+    const requestHeaders = req.headers['access-control-request-headers'];
+
+    if (method === 'OPTIONS') {
+      res.header('Access-Control-Allow-Methods', DEFAULT_ALLOWED_METHODS);
+      res.header('Access-Control-Allow-Headers', requestHeaders);
+      return res.end();
+    }
   }
-  next() 
-}
+  return next();
+};
 
 async function initServer() {
   const app = express();
