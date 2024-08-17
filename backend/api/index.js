@@ -49,11 +49,9 @@ app.use(
 // app.use("/api/game", require("../routes/game"));
 
 // --------------------------DEPLOYMENT------------------------------
-console.log('aaaaa')
 app.get("/", (req, res) => {
   res.send("API is running");
 });
-console.log('bbb')
 // --------------------------DEPLOYMENT------------------------------
 
 // Error Handler Middleware (Should be at the end of all middlewares)
@@ -65,6 +63,7 @@ const PORT = process.env.PORT || 5000;
 //   console.log(`Server running on PORT ${PORT}`)
 // );
 await new Promise((resolve) => httpServer.listen({ port: PORT }, resolve));
+console.log('cccc')
 console.log(`🚀 Server ready at http://localhost:${PORT}/`);
 
 // Handling server errors with clean error messages
