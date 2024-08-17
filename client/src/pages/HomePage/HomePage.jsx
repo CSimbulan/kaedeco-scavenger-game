@@ -14,7 +14,7 @@ import {
 
 // @ts-ignore
 const HomePageDivider = styled(Divider)(({ breakpointmdup }) => ({
-  width: breakpointmdup ? "50%" : "100%",
+  width: breakpointmdup === "true" ? "50%" : "100%",
   borderWidth: 8,
   borderRadius: 10,
   borderColor: "red",
@@ -29,8 +29,7 @@ const MyGamesButton = styled(Button)(() => ({
   boxShadow: "15px 15px 10px 5px rgba(4,77,14,1)",
   borderRadius: 8,
   padding: 9,
-  width: "60%",
-  minWidth: 360,
+  width: "100%",
   aspectRatio: "10/6 auto",
 }));
 
@@ -41,8 +40,7 @@ const StickerBookButton = styled(Button)(() => ({
   boxShadow: "15px 15px 10px 5px rgba(122,38,1,1);",
   borderRadius: 8,
   padding: 9,
-  width: "60%",
-  minWidth: 360,
+  width: "100%",
   aspectRatio: "10/6 auto",
 }));
 
@@ -53,8 +51,7 @@ const SettingsButton = styled(Button)(() => ({
   boxShadow: "15px 15px 10px 5px rgba(6,5,77,1);",
   borderRadius: 8,
   padding: 9,
-  width: "60%",
-  minWidth: 360,
+  width: "100%",
   aspectRatio: "10/6 auto",
 }));
 
@@ -65,8 +62,7 @@ const OrganizationsButton = styled(Button)(() => ({
   boxShadow: "15px 15px 10px 5px rgba(77,60,5,1);",
   borderRadius: 8,
   padding: 9,
-  width: "60%",
-  minWidth: 360,
+  width: "100%",
   aspectRatio: "10/6 auto",
 }));
 
@@ -76,14 +72,34 @@ const ButtonBox = styled(Box)(() => ({
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
+  padding: 32,
 }));
 
 const HomePage = () => {
   const { auth } = AuthState();
   const theme = useTheme();
-  const breakpointSmUp = useMediaQuery(theme.breakpoints.up("sm"));
+  const breakpointSmUp = useMediaQuery(theme.breakpoints.up("sm")); // Up is inclusive
   const breakpointMdUp = useMediaQuery(theme.breakpoints.up("md"));
+  const breakpointSmDown = useMediaQuery(theme.breakpoints.down("sm")); // Down is exclsuive
+  const breakpointMdDown = useMediaQuery(theme.breakpoints.down("md"));
   const breakpointLgDown = useMediaQuery(theme.breakpoints.down("lg"));
+  const breakpointXlDown = useMediaQuery(theme.breakpoints.down("xl"));
+
+  const buttonWidth = breakpointSmDown
+    ? "100%"
+    : breakpointMdDown
+    ? "100%"
+    : breakpointLgDown
+    ? "100%"
+    : "60%";
+
+  const buttonFontSize = breakpointSmDown
+    ? "h4"
+    : breakpointMdDown
+    ? "h6"
+    : breakpointXlDown
+    ? "h4"
+    : "h3";
 
   return (
     <>
@@ -120,14 +136,23 @@ const HomePage = () => {
             // @ts-ignore
             breakpointmdup={breakpointMdUp.toString()}
           />
-          <Grid
-            container
-            rowSpacing={8}
-            sx={{ width: breakpointLgDown ? "100%" : "70%" }}
-            mb={8}
-          >
-            <Grid item md={6} xs={12}>
-              <Box display="flex" justifyContent="center">
+          <Grid container sx={{ width: buttonWidth }} mb={8}>
+            <Grid
+              item
+              p={4}
+              sm={6}
+              xs={12}
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+            >
+              <Box
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+                width="100%"
+                height="100%"
+              >
                 <MyGamesButton>
                   <ButtonBox
                     sx={{
@@ -137,7 +162,7 @@ const HomePage = () => {
                     }}
                   >
                     <Typography
-                      variant="h3"
+                      variant={buttonFontSize}
                       color="white"
                       sx={{
                         textShadow:
@@ -150,8 +175,22 @@ const HomePage = () => {
                 </MyGamesButton>
               </Box>
             </Grid>
-            <Grid item md={6} xs={12}>
-              <Box display="flex" justifyContent="center">
+            <Grid
+              item
+              p={4}
+              sm={6}
+              xs={12}
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+            >
+              <Box
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+                width="100%"
+                height="100%"
+              >
                 <StickerBookButton>
                   <ButtonBox
                     sx={{
@@ -161,7 +200,7 @@ const HomePage = () => {
                     }}
                   >
                     <Typography
-                      variant="h3"
+                      variant={buttonFontSize}
                       color="white"
                       sx={{
                         textShadow:
@@ -174,8 +213,22 @@ const HomePage = () => {
                 </StickerBookButton>
               </Box>
             </Grid>
-            <Grid item md={6} xs={12}>
-              <Box display="flex" justifyContent="center">
+            <Grid
+              item
+              p={4}
+              sm={6}
+              xs={12}
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+            >
+              <Box
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+                width="100%"
+                height="100%"
+              >
                 <SettingsButton>
                   <ButtonBox
                     sx={{
@@ -185,7 +238,7 @@ const HomePage = () => {
                     }}
                   >
                     <Typography
-                      variant="h3"
+                      variant={buttonFontSize}
                       color="white"
                       sx={{
                         textShadow:
@@ -198,8 +251,22 @@ const HomePage = () => {
                 </SettingsButton>
               </Box>
             </Grid>
-            <Grid item md={6} xs={12}>
-              <Box display="flex" justifyContent="center">
+            <Grid
+              item
+              p={4}
+              sm={6}
+              xs={12}
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+            >
+              <Box
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+                width="100%"
+                height="100%"
+              >
                 <OrganizationsButton>
                   <ButtonBox
                     sx={{
@@ -209,7 +276,7 @@ const HomePage = () => {
                     }}
                   >
                     <Typography
-                      variant="h4"
+                      variant={buttonFontSize}
                       color="white"
                       sx={{
                         textShadow:
