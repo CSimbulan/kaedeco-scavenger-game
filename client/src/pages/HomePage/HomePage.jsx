@@ -1,80 +1,228 @@
-import { useState, useEffect } from "react";
-
 import { AuthState } from "../../context/AuthProvider";
-import { Notify } from "../../utils";
 import React from "react";
 import {
   Avatar,
   Box,
   Button,
-  CircularProgress,
+  Divider,
+  Grid,
+  styled,
   Typography,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
-import { useQuery } from "@apollo/client";
-import { GET_GAMES_BY_USER } from "graphql/queries/game/getGamesByUserQuery";
+
+// @ts-ignore
+const HomePageDivider = styled(Divider)(({ breakpointmdup }) => ({
+  width: breakpointmdup ? "50%" : "100%",
+  borderWidth: 8,
+  borderRadius: 10,
+  borderColor: "red",
+  margin: 64,
+}));
+//`${process.env.PUBLIC_URL}treasuremap.jpg`
+
+const MyGamesButton = styled(Button)(() => ({
+  background: `linear-gradient(#ffffff, #ffffff) 50% 50%/calc(100% - 20px) calc(100% - 20px) no-repeat,
+            linear-gradient(306deg, #82ea04 0%, #0bf333 20%, #0e7a24 42%, #245f0d 65%, #198418 83%, #18db3a 99%);`,
+  boxSizing: "border-box",
+  boxShadow: "15px 15px 10px 5px rgba(4,77,14,1)",
+  borderRadius: 8,
+  padding: 9,
+  width: "60%",
+  minWidth: 360,
+  aspectRatio: "10/6 auto",
+}));
+
+const StickerBookButton = styled(Button)(() => ({
+  background: `linear-gradient(#ffffff, #ffffff) 50% 50%/calc(100% - 20px) calc(100% - 20px) no-repeat,
+            linear-gradient(306deg, #ea048b 0%, #f30b39 20%, #7a0e2a 42%, #5f0d22 65%, #841818 83%, #db1818 99%);`,
+  boxSizing: "border-box",
+  boxShadow: "15px 15px 10px 5px rgba(122,38,1,1);",
+  borderRadius: 8,
+  padding: 9,
+  width: "60%",
+  minWidth: 360,
+  aspectRatio: "10/6 auto",
+}));
+
+const SettingsButton = styled(Button)(() => ({
+  background: `linear-gradient(#ffffff, #ffffff) 50% 50%/calc(100% - 20px) calc(100% - 20px) no-repeat,
+            linear-gradient(306deg, #04e0ea 0%, #0b6cf3 20%, #0e1b7a 42%, #0d0f5f 65%, #184f84 83%, #18c1db 99%);`,
+  boxSizing: "border-box",
+  boxShadow: "15px 15px 10px 5px rgba(6,5,77,1);",
+  borderRadius: 8,
+  padding: 9,
+  width: "60%",
+  minWidth: 360,
+  aspectRatio: "10/6 auto",
+}));
+
+const OrganizationsButton = styled(Button)(() => ({
+  background: `linear-gradient(#ffffff, #ffffff) 50% 50%/calc(100% - 20px) calc(100% - 20px) no-repeat,
+            linear-gradient(306deg, #eae404 0%, #f3df0b 20%, #7a460e 42%, #5f530d 65%, #845d18 83%, #dbb218 99%);`,
+  boxSizing: "border-box",
+  boxShadow: "15px 15px 10px 5px rgba(77,60,5,1);",
+  borderRadius: 8,
+  padding: 9,
+  width: "60%",
+  minWidth: 360,
+  aspectRatio: "10/6 auto",
+}));
+
+const ButtonBox = styled(Box)(() => ({
+  width: "100%",
+  height: "100%",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+}));
 
 const HomePage = () => {
-  const [gamesData, setGamesData] = useState([]);
-
   const { auth } = AuthState();
-
-  const { data, loading } = useQuery(GET_GAMES_BY_USER, {
-    variables: {
-      input: auth.id,
-    },
-  });
+  const theme = useTheme();
+  const breakpointSmUp = useMediaQuery(theme.breakpoints.up("sm"));
+  const breakpointMdUp = useMediaQuery(theme.breakpoints.up("md"));
+  const breakpointLgDown = useMediaQuery(theme.breakpoints.down("lg"));
 
   return (
     <>
       {auth && (
         <Box
-          width="100vw"
           display="flex"
           justifyContent="center"
           alignItems="center"
           flexDirection="column"
           p={2}
         >
-          {loading ? (
-            <CircularProgress />
-          ) : (
-            <>
-              <Avatar
-                src={auth.profilePic}
-                alt="Profile image"
-                style={{ width: 100, height: 100, margin: 32 }}
-              />
+          <Box
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            mt={4}
+          >
+            <Avatar
+              src={auth.profilePic}
+              alt="Profile image"
+              style={{ width: 100, height: 100, marginRight: 32 }}
+            />
+            <Box>
               <Typography variant="h4" align="center">
-                Welcome back, {auth.name}
+                Welcome back,
               </Typography>
-              {data.gamesByUser.map((game) => (
-                <Button
-                  key={game._id}
-                  href={`/game/${game._id}`}
-                  variant="outlined"
-                  style={{
-                    margin: 32,
-                    border: "3px solid #e57373",
-                    borderRadius: 10,
-                    width: 300,
-                    color: "black",
-                  }}
-                >
-                  <Box
-                    display={"flex"}
-                    alignItems="center"
-                    justifyContent={"center"}
+              <Typography variant="h4" align="center" display={"inline"}>
+                {auth.name}
+              </Typography>
+            </Box>
+          </Box>
+          <HomePageDivider
+            variant="middle"
+            // @ts-ignore
+            breakpointmdup={breakpointMdUp.toString()}
+          />
+          <Grid
+            container
+            rowSpacing={8}
+            sx={{ width: breakpointLgDown ? "100%" : "70%" }}
+            mb={8}
+          >
+            <Grid item md={6} xs={12}>
+              <Box display="flex" justifyContent="center">
+                <MyGamesButton>
+                  <ButtonBox
+                    sx={{
+                      backgroundImage: `url(${process.env.PUBLIC_URL}scavengerhunt.png)`,
+                      backgroundSize: "cover",
+                      backgroundPosition: "center",
+                    }}
                   >
-                    <Avatar
-                      src={game.image}
-                      style={{ marginRight: 32, width: 64, height: 64 }}
-                    />{" "}
-                    {game.name}
-                  </Box>
-                </Button>
-              ))}
-            </>
-          )}
+                    <Typography
+                      variant="h3"
+                      color="white"
+                      sx={{
+                        textShadow:
+                          "1px 0px 15px rgba(0,243,58,0.68), 1px 0px 25px rgba(0,243,58,0.68), 1px 0px 35px rgba(0,243,58,0.68), 1px 0px 45px rgba(0,243,58,0.68);",
+                      }}
+                    >
+                      My Games
+                    </Typography>
+                  </ButtonBox>
+                </MyGamesButton>
+              </Box>
+            </Grid>
+            <Grid item md={6} xs={12}>
+              <Box display="flex" justifyContent="center">
+                <StickerBookButton>
+                  <ButtonBox
+                    sx={{
+                      backgroundImage: `url(${process.env.PUBLIC_URL}stickerbook.png)`,
+                      backgroundSize: "cover",
+                      backgroundPosition: "center",
+                    }}
+                  >
+                    <Typography
+                      variant="h3"
+                      color="white"
+                      sx={{
+                        textShadow:
+                          "1px 0px 15px rgba(243,0,0,0.68), 1px 0px 25px rgba(243,0,0,0.68), 1px 0px 35px rgba(243,0,0,0.68), 1px 0px 45px rgba(243,0,0,0.68);",
+                      }}
+                    >
+                      Sticker Book
+                    </Typography>
+                  </ButtonBox>
+                </StickerBookButton>
+              </Box>
+            </Grid>
+            <Grid item md={6} xs={12}>
+              <Box display="flex" justifyContent="center">
+                <SettingsButton>
+                  <ButtonBox
+                    sx={{
+                      backgroundImage: `url(${process.env.PUBLIC_URL}office.png)`,
+                      backgroundSize: "cover",
+                      backgroundPosition: "center",
+                    }}
+                  >
+                    <Typography
+                      variant="h3"
+                      color="white"
+                      sx={{
+                        textShadow:
+                          "1px 0px 15px rgba(0,91,243,0.68), 1px 0px 25px rgba(0,91,243,0.68), 1px 0px 35px rgba(0,91,243,0.68), 1px 0px 45px rgba(0,91,243,0.68);",
+                      }}
+                    >
+                      Account Settings
+                    </Typography>
+                  </ButtonBox>
+                </SettingsButton>
+              </Box>
+            </Grid>
+            <Grid item md={6} xs={12}>
+              <Box display="flex" justifyContent="center">
+                <OrganizationsButton>
+                  <ButtonBox
+                    sx={{
+                      backgroundImage: `url(${process.env.PUBLIC_URL}construction.png)`,
+                      backgroundSize: "cover",
+                      backgroundPosition: "center",
+                    }}
+                  >
+                    <Typography
+                      variant="h4"
+                      color="white"
+                      sx={{
+                        textShadow:
+                          "1px 0px 15px rgba(243,195,0,0.68), 1px 0px 25px rgba(243,195,0,0.68), 1px 0px 35px rgba(243,195,0,0.68), 1px 0px 45px rgba(243,195,0,0.68);",
+                      }}
+                    >
+                      Organizations (Coming Soon)
+                    </Typography>
+                  </ButtonBox>
+                </OrganizationsButton>
+              </Box>
+            </Grid>
+          </Grid>
         </Box>
       )}
     </>
