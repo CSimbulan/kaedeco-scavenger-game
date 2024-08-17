@@ -27,7 +27,6 @@
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "graphql": "^16.9.0",
-    "http": "^0.0.1-security",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.7.2",
     "nodemailer": "^6.8.0",

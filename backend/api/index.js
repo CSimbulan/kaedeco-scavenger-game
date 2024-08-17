@@ -1,5 +1,4 @@
 import express from "express";
-import path from "path";
 import dotenv from "dotenv";
 import cors from "cors";
 import http from "http";
@@ -63,7 +62,6 @@ const PORT = process.env.PORT || 5000;
 //   console.log(`Server running on PORT ${PORT}`)
 // );
 await new Promise((resolve) => httpServer.listen({ port: PORT }, resolve));
-console.log('cccc')
 console.log(`🚀 Server ready at http://localhost:${PORT}/`);
 
 // Handling server errors with clean error messages
