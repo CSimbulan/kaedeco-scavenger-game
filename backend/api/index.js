@@ -30,7 +30,7 @@ const server = new ApolloServer({
 await server.start();
 
 app.use(express.json());
-connectDB(); // Connect to databse
+await connectDB(); // Connect to databse
 app.use(
   "/",
   cors({
@@ -49,11 +49,11 @@ app.use(
 // app.use("/api/game", require("../routes/game"));
 
 // --------------------------DEPLOYMENT------------------------------
-
+console.log('aaaaa')
 app.get("/", (req, res) => {
   res.send("API is running");
 });
-
+console.log('bbb')
 // --------------------------DEPLOYMENT------------------------------
 
 // Error Handler Middleware (Should be at the end of all middlewares)
