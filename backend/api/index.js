@@ -58,14 +58,14 @@ app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 
-const server2 = app.listen(PORT, () =>
-  console.log(`Server running on PORT ${PORT}`)
-);
-// await new Promise((resolve) => httpServer.listen({ port: PORT }, resolve));
-// console.log(`🚀 Server ready at http://localhost:${PORT}/`);
+// const server2 = app.listen(PORT, () =>
+//   console.log(`Server running on PORT ${PORT}`)
+// );
+await new Promise((resolve) => httpServer.listen({ port: PORT }, resolve));
+console.log(`🚀 Server ready at http://localhost:${PORT}/`);
 
 // Handling server errors with clean error messages
 process.on("unhandledRejection", (err, promise) => {
   console.log(`Logged Error: ${err.message}`);
-  server2.close(() => process.exit(1));
+  httpServer.close(() => process.exit(1));
 });
