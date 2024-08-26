@@ -48,9 +48,9 @@ app.use(
 // app.use("/api/game", require("../routes/game"));
 
 // --------------------------DEPLOYMENT------------------------------
-// app.get("/", (req, res) => {
-//   res.send("API is running");
-// });
+app.get("/", (req, res) => {
+  res.send("API is running");
+});
 // --------------------------DEPLOYMENT------------------------------
 
 // Error Handler Middleware (Should be at the end of all middlewares)
