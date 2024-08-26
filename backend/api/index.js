@@ -54,9 +54,7 @@ app.use(
 // --------------------------DEPLOYMENT------------------------------
 
 // Error Handler Middleware (Should be at the end of all middlewares)
-console.log("pre errorhandler");
 app.use(errorHandler);
-console.log("post errorhandler");
 
 const PORT = process.env.PORT || 5000;
 
