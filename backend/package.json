@@ -2,7 +2,7 @@
   "name": "kaedeco-scavenger-game",
   "version": "1.0.0",
   "description": "scavenger hunt game for Kaede Co events",
-  "main": "server.js",
+  "main": "./api/index.js",
   "scripts": {
     "start": "node ./api/index.js",
     "dev": "nodemon ./api/index.js"

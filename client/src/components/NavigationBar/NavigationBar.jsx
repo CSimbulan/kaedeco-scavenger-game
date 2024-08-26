@@ -55,8 +55,8 @@ const NavigationBar = () => {
               <></>
             )}
             <Typography variant="body2" display="inline" ml={2} mt={1}>
-                gql test branch
-              </Typography>
+              gql test branch
+            </Typography>
           </Box>
         </Navbar.Brand>
 

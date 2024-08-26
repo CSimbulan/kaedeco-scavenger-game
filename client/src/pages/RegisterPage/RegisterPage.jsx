@@ -123,18 +123,21 @@ const RegisterPage = () => {
 
     try {
       // Register user
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/auth/register`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: credentials.name,
-          email: credentials.email,
-          password: credentials.password,
-          profilePic: credentials.profilePic,
-        }),
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/api/auth/register`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name: credentials.name,
+            email: credentials.email,
+            password: credentials.password,
+            profilePic: credentials.profilePic,
+          }),
+        }
+      );
       const data = await response.json();
 
       if (data.success) {
@@ -250,9 +253,12 @@ const RegisterPage = () => {
       <Form.Group className="mb-3 text-center" controlId="register">
         <span>
           Already have an account?&nbsp;
-          <Link to="/login" 
-// @ts-ignore
-          tabIndex="6" className="text-decoration-none">
+          <Link
+            to="/login"
+            // @ts-ignore
+            tabIndex="6"
+            className="text-decoration-none"
+          >
             Log in
           </Link>
         </span>
