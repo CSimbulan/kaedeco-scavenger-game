@@ -31,7 +31,7 @@ await server.start();
 app.use(express.json());
 await connectDB(); // Connect to databse
 app.use(
-  "/",
+  "/api",
   cors({
     origin: `${process.env.APP_BASE_URL}` || "http://localhost:3000",
     credentials: true,
