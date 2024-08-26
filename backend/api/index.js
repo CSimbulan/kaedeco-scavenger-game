@@ -67,5 +67,5 @@ const server2 = app.listen(PORT, () =>
 // Handling server errors with clean error messages
 process.on("unhandledRejection", (err, promise) => {
   console.log(`Logged Error: ${err.message}`);
-  server.close(() => process.exit(1));
+  server2.close(() => process.exit(1));
 });
