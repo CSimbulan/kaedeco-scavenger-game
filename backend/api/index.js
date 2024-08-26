@@ -48,13 +48,15 @@ app.use(
 // app.use("/api/game", require("../routes/game"));
 
 // --------------------------DEPLOYMENT------------------------------
-app.get("/", (req, res) => {
-  res.send("API is running");
-});
+// app.get("/", (req, res) => {
+//   res.send("API is running");
+// });
 // --------------------------DEPLOYMENT------------------------------
 
 // Error Handler Middleware (Should be at the end of all middlewares)
+console.log("pre errorhandler");
 app.use(errorHandler);
+console.log("post errorhandler");
 
 const PORT = process.env.PORT || 5000;
 
