@@ -33,7 +33,7 @@ await connectDB(); // Connect to databse
 app.use(
   "/",
   cors({
-    origin: `*.kaedeco.quest` || "http://localhost:3000",
+    origin: `${process.env.APP_BASE_URL}` || "http://localhost:3000",
     credentials: true,
   }),
   expressMiddleware(server, {
