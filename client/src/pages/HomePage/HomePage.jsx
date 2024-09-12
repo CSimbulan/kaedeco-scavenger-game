@@ -22,8 +22,11 @@ const HomePageDivider = styled(Divider)(({ breakpointmdup }) => ({
 }));
 //`${process.env.PUBLIC_URL}treasuremap.jpg`
 
-const HomePageOptionButton = styled(Button)(() => ({
-  background: `linear-gradient(#ffffff, #ffffff) 50% 50%/calc(100% - 26px) calc(100% - 26px) no-repeat,
+// @ts-ignore
+const HomePageOptionButton = styled(Button)(({ breakpointsmdown }) => ({
+  background: `linear-gradient(#ffffff, #ffffff) 50% 50%/calc(100% - ${
+    breakpointsmdown === "true" ? "13px" : "26px"
+  }) calc(100% - ${breakpointsmdown === "true" ? "13px" : "26px"}) no-repeat,
             radial-gradient(at 100% 100%, rgba(254,93,93,1) 0%, transparent 70%),
             radial-gradient(at 100% 0%, rgba(248,143,249,1) 0%, transparent 70%),
             radial-gradient(at 0% 0%, rgba(254,93,93,1) 0%, transparent 70%),
@@ -72,7 +75,7 @@ const HomePage = () => {
     : "60%";
 
   const buttonFontSize = breakpointSmDown
-    ? "h4"
+    ? "h5"
     : breakpointMdDown
     ? "h6"
     : breakpointXlDown
@@ -100,7 +103,7 @@ const HomePage = () => {
               alt="Profile image"
               style={{ width: 100, height: 100, marginRight: 32 }}
             />
-            <Box>
+            <Box display="flex" flexDirection="column" alignItems="start">
               <Typography variant="h4" align="center">
                 Welcome back,
               </Typography>
@@ -131,7 +134,10 @@ const HomePage = () => {
                 width="100%"
                 height="100%"
               >
-                <HomePageOptionButton>
+                <HomePageOptionButton
+                  // @ts-ignore
+                  breakpointsmdown={breakpointXlDown.toString()}
+                >
                   <ButtonBox2>
                     <Box height="100%" sx={{ aspectRatio: "1/1 auto" }}>
                       <img
@@ -147,7 +153,9 @@ const HomePage = () => {
                       mb={1}
                       mr={2}
                       sx={{
-                        textShadow: `1px 3px 0 #963336, 1px 13px 5px #aba8a8`,
+                        textShadow: `${
+                          breakpointMdUp ? "1px 3px 0 #963336," : ""
+                        } 1px 13px 5px #aba8a8`,
                         WebkitTextStroke: "1px #963336",
                       }}
                     >
@@ -173,7 +181,10 @@ const HomePage = () => {
                 width="100%"
                 height="100%"
               >
-                <HomePageOptionButton>
+                <HomePageOptionButton
+                  // @ts-ignore
+                  breakpointsmdown={breakpointXlDown.toString()}
+                >
                   <ButtonBox2>
                     <Box height="100%" sx={{ aspectRatio: "1/1 auto" }}>
                       <img
@@ -189,7 +200,9 @@ const HomePage = () => {
                       mb={1}
                       mr={2}
                       sx={{
-                        textShadow: `1px 3px 0 #963336, 1px 13px 5px #aba8a8`,
+                        textShadow: `${
+                          breakpointMdUp ? "1px 3px 0 #963336," : ""
+                        } 1px 13px 5px #aba8a8`,
                         WebkitTextStroke: "1px #963336",
                       }}
                     >
@@ -215,7 +228,10 @@ const HomePage = () => {
                 width="100%"
                 height="100%"
               >
-                <HomePageOptionButton>
+                <HomePageOptionButton
+                  // @ts-ignore
+                  breakpointsmdown={breakpointXlDown.toString()}
+                >
                   <ButtonBox2>
                     <Box height="100%" sx={{ aspectRatio: "1/1 auto" }}>
                       <img
@@ -231,7 +247,9 @@ const HomePage = () => {
                       mb={1}
                       mr={2}
                       sx={{
-                        textShadow: `1px 3px 0 #963336, 1px 13px 5px #aba8a8`,
+                        textShadow: `${
+                          breakpointMdUp ? "1px 3px 0 #963336," : ""
+                        } 1px 13px 5px #aba8a8`,
                         WebkitTextStroke: "1px #963336",
                       }}
                     >
@@ -257,7 +275,10 @@ const HomePage = () => {
                 width="100%"
                 height="100%"
               >
-                <HomePageOptionButton>
+                <HomePageOptionButton
+                  // @ts-ignore
+                  breakpointsmdown={breakpointXlDown.toString()}
+                >
                   <ButtonBox2>
                     <Box height="100%" sx={{ aspectRatio: "1/1 auto" }}>
                       <img
@@ -273,7 +294,9 @@ const HomePage = () => {
                       mb={1}
                       mr={2}
                       sx={{
-                        textShadow: `1px 3px 0 #963336, 1px 13px 5px #aba8a8`,
+                        textShadow: `${
+                          breakpointMdUp ? "1px 3px 0 #963336," : ""
+                        } 1px 13px 5px #aba8a8`,
                         WebkitTextStroke: "1px #963336",
                         textOverflow: "ellipsis",
                       }}
