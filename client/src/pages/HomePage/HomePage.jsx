@@ -130,7 +130,7 @@ const HomePage = () => {
               style={{ width: 100, height: 100, marginRight: 32 }}
             />
             <Box display="flex" flexDirection="column" alignItems="start">
-              <Typography variant="h4" align="left">
+              <Typography variant={breakpointSmDown ? "h5" : "h4"} align="left">
                 Welcome back,
               </Typography>
               <Typography variant="h4" align="left" display={"inline"}>
