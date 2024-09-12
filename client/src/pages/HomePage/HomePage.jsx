@@ -39,10 +39,11 @@ const HomePageOptionButton = styled(Button)(({ breakpointsmdown }) => ({
   aspectRatio: "3/1 auto",
   transition: "all .2s ease-out",
   textTransform: "none",
-  "&:hover": {
-    transform: "translateY(4px)",
-    boxShadow: "5px 5px 10px 5px rgba(122,38,1,1)",
-    cursor: "pointer",
+  "@media (pointer: fine)": {
+    "&:hover": {
+      transform: "translateY(4px)",
+      boxShadow: "5px 5px 10px 5px rgba(122,38,1,1)",
+    },
   },
 }));
 
@@ -63,10 +64,11 @@ const HomePageAdminButton = styled(Button)(({ breakpointsmdown }) => ({
   aspectRatio: "3/1 auto",
   transition: "all .2s ease-out",
   textTransform: "none",
-  "&:hover": {
-    transform: "translateY(4px)",
-    boxShadow: "5px 5px 10px 5px rgba(109,65,113,1)",
-    cursor: "pointer",
+  "@media (pointer: fine)": {
+    "&:hover": {
+      transform: "translateY(4px)",
+      boxShadow: "5px 5px 10px 5px rgba(109,65,113,1)",
+    },
   },
 }));
 
