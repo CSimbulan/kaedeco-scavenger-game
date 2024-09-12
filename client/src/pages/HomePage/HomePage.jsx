@@ -46,6 +46,30 @@ const HomePageOptionButton = styled(Button)(({ breakpointsmdown }) => ({
   },
 }));
 
+// @ts-ignore
+const HomePageAdminButton = styled(Button)(({ breakpointsmdown }) => ({
+  background: `linear-gradient(#ffffff, #ffffff) 50% 50%/calc(100% - ${
+    breakpointsmdown === "true" ? "13px" : "26px"
+  }) calc(100% - ${breakpointsmdown === "true" ? "13px" : "26px"}) no-repeat,
+            radial-gradient(at 100% 100%, rgba(160,75,248,1) 0%, transparent 70%),
+            radial-gradient(at 100% 0%, rgba(247,142,255,1) 0%, transparent 70%),
+            radial-gradient(at 0% 0%, rgba(160,75,248,1)0%, transparent 70%),
+            radial-gradient(at 0% 100%, rgba(247,142,255,1) 0%, rgba(255,0,0,0) 70%);`,
+  boxSizing: "border-box",
+  boxShadow: "15px 15px 10px 5px rgba(109,65,113,1)",
+  borderRadius: 8,
+  padding: 9,
+  width: "100%",
+  aspectRatio: "3/1 auto",
+  transition: "all .2s ease-out",
+  textTransform: "none",
+  "&:hover": {
+    transform: "translateY(4px)",
+    boxShadow: "5px 5px 10px 5px rgba(109,65,113,1)",
+    cursor: "pointer",
+  },
+}));
+
 const ButtonBox2 = styled(Box)(() => ({
   width: "100%",
   height: "100%",
@@ -104,10 +128,10 @@ const HomePage = () => {
               style={{ width: 100, height: 100, marginRight: 32 }}
             />
             <Box display="flex" flexDirection="column" alignItems="start">
-              <Typography variant="h4" align="center">
+              <Typography variant="h4" align="left">
                 Welcome back,
               </Typography>
-              <Typography variant="h4" align="center" display={"inline"}>
+              <Typography variant="h4" align="left" display={"inline"}>
                 {auth.name}
               </Typography>
             </Box>
@@ -118,6 +142,57 @@ const HomePage = () => {
             breakpointmdup={breakpointMdUp.toString()}
           />
           <Grid container sx={{ width: buttonWidth }} mb={8}>
+            {auth.admin && (
+              <Grid
+                item
+                p={4}
+                sm={6}
+                xs={12}
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+              >
+                <Box
+                  display="flex"
+                  justifyContent="center"
+                  alignItems="center"
+                  width="100%"
+                  height="100%"
+                >
+                  <HomePageAdminButton
+                    // @ts-ignore
+                    breakpointsmdown={breakpointXlDown.toString()}
+                  >
+                    <ButtonBox2>
+                      <Box height="100%" sx={{ aspectRatio: "1/1 auto" }}>
+                        <img
+                          src={`${process.env.PUBLIC_URL}purple-key.png`}
+                          alt="pink-key"
+                          width={"100%"}
+                          height={"100%"}
+                        />
+                      </Box>
+                      <Typography
+                        variant={buttonFontSize}
+                        color="rgba(160,75,248,1)"
+                        mb={1}
+                        mr={2}
+                        sx={{
+                          textShadow: `${
+                            breakpointMdUp
+                              ? "1px 3px 0 rgba(109,65,113,1),"
+                              : ""
+                          } 1px 13px 5px #aba8a8`,
+                          WebkitTextStroke: "1px rgba(109,65,113,1)",
+                        }}
+                      >
+                        Admin
+                      </Typography>
+                    </ButtonBox2>
+                  </HomePageAdminButton>
+                </Box>
+              </Grid>
+            )}
             <Grid
               item
               p={4}
