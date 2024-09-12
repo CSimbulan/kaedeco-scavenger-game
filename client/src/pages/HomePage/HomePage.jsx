@@ -22,63 +22,41 @@ const HomePageDivider = styled(Divider)(({ breakpointmdup }) => ({
 }));
 //`${process.env.PUBLIC_URL}treasuremap.jpg`
 
-const MyGamesButton = styled(Button)(() => ({
-  background: `linear-gradient(#ffffff, #ffffff) 50% 50%/calc(100% - 20px) calc(100% - 20px) no-repeat,
-            linear-gradient(306deg, #82ea04 0%, #0bf333 20%, #0e7a24 42%, #245f0d 65%, #198418 83%, #18db3a 99%);`,
+const HomePageOptionButton = styled(Button)(() => ({
+  background: `linear-gradient(#ffffff, #ffffff) 50% 50%/calc(100% - 26px) calc(100% - 26px) no-repeat,
+            radial-gradient(at 100% 100%, rgba(254,93,93,1) 0%, transparent 70%),
+            radial-gradient(at 100% 0%, rgba(248,143,249,1) 0%, transparent 70%),
+            radial-gradient(at 0% 0%, rgba(254,93,93,1) 0%, transparent 70%),
+            radial-gradient(at 0% 100%, rgba(248,143,249,1) 0%, rgba(248,143,249,0) 70%);`,
   boxSizing: "border-box",
-  boxShadow: "15px 15px 10px 5px rgba(4,77,14,1)",
+  boxShadow: "15px 15px 10px 5px rgba(122,38,1,1)",
   borderRadius: 8,
   padding: 9,
   width: "100%",
-  aspectRatio: "10/6 auto",
+  aspectRatio: "3/1 auto",
+  transition: "all .2s ease-out",
+  textTransform: "none",
+  "&:hover": {
+    transform: "translateY(4px)",
+    boxShadow: "5px 5px 10px 5px rgba(122,38,1,1)",
+    cursor: "pointer",
+  },
 }));
 
-const StickerBookButton = styled(Button)(() => ({
-  background: `linear-gradient(#ffffff, #ffffff) 50% 50%/calc(100% - 20px) calc(100% - 20px) no-repeat,
-            linear-gradient(306deg, #ea048b 0%, #f30b39 20%, #7a0e2a 42%, #5f0d22 65%, #841818 83%, #db1818 99%);`,
-  boxSizing: "border-box",
-  boxShadow: "15px 15px 10px 5px rgba(122,38,1,1);",
-  borderRadius: 8,
-  padding: 9,
-  width: "100%",
-  aspectRatio: "10/6 auto",
-}));
-
-const SettingsButton = styled(Button)(() => ({
-  background: `linear-gradient(#ffffff, #ffffff) 50% 50%/calc(100% - 20px) calc(100% - 20px) no-repeat,
-            linear-gradient(306deg, #04e0ea 0%, #0b6cf3 20%, #0e1b7a 42%, #0d0f5f 65%, #184f84 83%, #18c1db 99%);`,
-  boxSizing: "border-box",
-  boxShadow: "15px 15px 10px 5px rgba(6,5,77,1);",
-  borderRadius: 8,
-  padding: 9,
-  width: "100%",
-  aspectRatio: "10/6 auto",
-}));
-
-const OrganizationsButton = styled(Button)(() => ({
-  background: `linear-gradient(#ffffff, #ffffff) 50% 50%/calc(100% - 20px) calc(100% - 20px) no-repeat,
-            linear-gradient(306deg, #eae404 0%, #f3df0b 20%, #7a460e 42%, #5f530d 65%, #845d18 83%, #dbb218 99%);`,
-  boxSizing: "border-box",
-  boxShadow: "15px 15px 10px 5px rgba(77,60,5,1);",
-  borderRadius: 8,
-  padding: 9,
-  width: "100%",
-  aspectRatio: "10/6 auto",
-}));
-
-const ButtonBox = styled(Box)(() => ({
+const ButtonBox2 = styled(Box)(() => ({
   width: "100%",
   height: "100%",
   display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  padding: 32,
+  alignItems: "end",
+  justifyContent: "space-between",
+  padding: 4,
+  overflow: "hidden",
 }));
 
 const HomePage = () => {
   const { auth } = AuthState();
   const theme = useTheme();
-  const breakpointSmUp = useMediaQuery(theme.breakpoints.up("sm")); // Up is inclusive
+  //const breakpointSmUp = useMediaQuery(theme.breakpoints.up("sm")); // Up is inclusive
   const breakpointMdUp = useMediaQuery(theme.breakpoints.up("md"));
   const breakpointSmDown = useMediaQuery(theme.breakpoints.down("sm")); // Down is exclsuive
   const breakpointMdDown = useMediaQuery(theme.breakpoints.down("md"));
@@ -153,26 +131,30 @@ const HomePage = () => {
                 width="100%"
                 height="100%"
               >
-                <MyGamesButton>
-                  <ButtonBox
-                    sx={{
-                      backgroundImage: `url(${process.env.PUBLIC_URL}scavengerhunt.png)`,
-                      backgroundSize: "cover",
-                      backgroundPosition: "center",
-                    }}
-                  >
+                <HomePageOptionButton>
+                  <ButtonBox2>
+                    <Box height="100%" sx={{ aspectRatio: "1/1 auto" }}>
+                      <img
+                        src={`${process.env.PUBLIC_URL}pink-shapes.png`}
+                        alt="pink-shapes"
+                        width={"100%"}
+                        height={"100%"}
+                      />
+                    </Box>
                     <Typography
                       variant={buttonFontSize}
-                      color="white"
+                      color="rgba(254,93,93,1)"
+                      mb={1}
+                      mr={2}
                       sx={{
-                        textShadow:
-                          "1px 0px 15px rgba(0,243,58,0.68), 1px 0px 25px rgba(0,243,58,0.68), 1px 0px 35px rgba(0,243,58,0.68), 1px 0px 45px rgba(0,243,58,0.68);",
+                        textShadow: `1px 3px 0 #963336, 1px 13px 5px #aba8a8`,
+                        WebkitTextStroke: "1px #963336",
                       }}
                     >
                       My Games
                     </Typography>
-                  </ButtonBox>
-                </MyGamesButton>
+                  </ButtonBox2>
+                </HomePageOptionButton>
               </Box>
             </Grid>
             <Grid
@@ -191,26 +173,30 @@ const HomePage = () => {
                 width="100%"
                 height="100%"
               >
-                <StickerBookButton>
-                  <ButtonBox
-                    sx={{
-                      backgroundImage: `url(${process.env.PUBLIC_URL}stickerbook.png)`,
-                      backgroundSize: "cover",
-                      backgroundPosition: "center",
-                    }}
-                  >
+                <HomePageOptionButton>
+                  <ButtonBox2>
+                    <Box height="100%" sx={{ aspectRatio: "1/1 auto" }}>
+                      <img
+                        src={`${process.env.PUBLIC_URL}pink-book.png`}
+                        alt="pink-shapes"
+                        width={"100%"}
+                        height={"100%"}
+                      />
+                    </Box>
                     <Typography
                       variant={buttonFontSize}
-                      color="white"
+                      color="rgba(254,93,93,1)"
+                      mb={1}
+                      mr={2}
                       sx={{
-                        textShadow:
-                          "1px 0px 15px rgba(243,0,0,0.68), 1px 0px 25px rgba(243,0,0,0.68), 1px 0px 35px rgba(243,0,0,0.68), 1px 0px 45px rgba(243,0,0,0.68);",
+                        textShadow: `1px 3px 0 #963336, 1px 13px 5px #aba8a8`,
+                        WebkitTextStroke: "1px #963336",
                       }}
                     >
-                      Sticker Book
+                      Stickerbook
                     </Typography>
-                  </ButtonBox>
-                </StickerBookButton>
+                  </ButtonBox2>
+                </HomePageOptionButton>
               </Box>
             </Grid>
             <Grid
@@ -229,26 +215,30 @@ const HomePage = () => {
                 width="100%"
                 height="100%"
               >
-                <SettingsButton>
-                  <ButtonBox
-                    sx={{
-                      backgroundImage: `url(${process.env.PUBLIC_URL}office.png)`,
-                      backgroundSize: "cover",
-                      backgroundPosition: "center",
-                    }}
-                  >
+                <HomePageOptionButton>
+                  <ButtonBox2>
+                    <Box height="100%" sx={{ aspectRatio: "1/1 auto" }}>
+                      <img
+                        src={`${process.env.PUBLIC_URL}pink-gear.png`}
+                        alt="pink-shapes"
+                        width={"100%"}
+                        height={"100%"}
+                      />
+                    </Box>
                     <Typography
                       variant={buttonFontSize}
-                      color="white"
+                      color="rgba(254,93,93,1)"
+                      mb={1}
+                      mr={2}
                       sx={{
-                        textShadow:
-                          "1px 0px 15px rgba(0,91,243,0.68), 1px 0px 25px rgba(0,91,243,0.68), 1px 0px 35px rgba(0,91,243,0.68), 1px 0px 45px rgba(0,91,243,0.68);",
+                        textShadow: `1px 3px 0 #963336, 1px 13px 5px #aba8a8`,
+                        WebkitTextStroke: "1px #963336",
                       }}
                     >
                       Account Settings
                     </Typography>
-                  </ButtonBox>
-                </SettingsButton>
+                  </ButtonBox2>
+                </HomePageOptionButton>
               </Box>
             </Grid>
             <Grid
@@ -267,26 +257,31 @@ const HomePage = () => {
                 width="100%"
                 height="100%"
               >
-                <OrganizationsButton>
-                  <ButtonBox
-                    sx={{
-                      backgroundImage: `url(${process.env.PUBLIC_URL}construction.png)`,
-                      backgroundSize: "cover",
-                      backgroundPosition: "center",
-                    }}
-                  >
+                <HomePageOptionButton>
+                  <ButtonBox2>
+                    <Box height="100%" sx={{ aspectRatio: "1/1 auto" }}>
+                      <img
+                        src={`${process.env.PUBLIC_URL}pink-castle.png`}
+                        alt="pink-shapes"
+                        width={"100%"}
+                        height={"100%"}
+                      />
+                    </Box>
                     <Typography
                       variant={buttonFontSize}
-                      color="white"
+                      color="rgba(254,93,93,1)"
+                      mb={1}
+                      mr={2}
                       sx={{
-                        textShadow:
-                          "1px 0px 15px rgba(243,195,0,0.68), 1px 0px 25px rgba(243,195,0,0.68), 1px 0px 35px rgba(243,195,0,0.68), 1px 0px 45px rgba(243,195,0,0.68);",
+                        textShadow: `1px 3px 0 #963336, 1px 13px 5px #aba8a8`,
+                        WebkitTextStroke: "1px #963336",
+                        textOverflow: "ellipsis",
                       }}
                     >
-                      Organizations (Coming Soon)
+                      Organizations
                     </Typography>
-                  </ButtonBox>
-                </OrganizationsButton>
+                  </ButtonBox2>
+                </HomePageOptionButton>
               </Box>
             </Grid>
           </Grid>
