@@ -72,7 +72,7 @@ const HomePage = () => {
     ? "100%"
     : breakpointLgDown
     ? "100%"
-    : "60%";
+    : "65%";
 
   const buttonFontSize = breakpointSmDown
     ? "h5"
@@ -159,7 +159,7 @@ const HomePage = () => {
                         WebkitTextStroke: "1px #963336",
                       }}
                     >
-                      My Games
+                      Games
                     </Typography>
                   </ButtonBox2>
                 </HomePageOptionButton>
@@ -253,7 +253,7 @@ const HomePage = () => {
                         WebkitTextStroke: "1px #963336",
                       }}
                     >
-                      Account Settings
+                      Account
                     </Typography>
                   </ButtonBox2>
                 </HomePageOptionButton>
